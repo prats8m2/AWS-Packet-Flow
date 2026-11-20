@@ -1172,8 +1172,7 @@ body[data-view="learn"] #hdesign{display:none}
 @media (max-width:1023px){
   .hl{display:none}
   .hg{flex-direction:row}
-  .lrow:not(.cur){display:none}
-  .lrow.cur{border-bottom:0}
+  .llist{max-height:420px}
   .pal-h{display:block}.pal-g>summary{display:flex}
   .pal-h{position:static}
   .pal-list{display:block;max-height:260px;overflow-y:auto;padding:6px 8px}
@@ -1204,8 +1203,165 @@ html.iso #bsvg .floor text{stroke:var(--canvas)}
 #net .node .t-flat,#bsvg .b-node .t-flat{fill:var(--surface)}
 #dimsw button{min-width:40px}
 html:not(.iso) .canvas,html:not(.iso) .b-canvas{background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px!important}
+
+/* lesson sections and service lessons */
+.lsec{font:700 10.5px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint);padding:16px 12px 6px}
+.lsec:first-child{padding-top:8px}
+.tstep{display:block;width:100%;background:none;border:0;padding:0;text-align:left;cursor:pointer;color:inherit;font:inherit}
+.tstep:hover p{color:var(--brand)}
+body.svc-mode main{display:none!important}
+body.svc-mode #builder{display:grid!important;--L:310px}
+body.svc-mode #builder>.b-pal{display:none!important}
+#builder>.lessons{grid-column:1;grid-row:1/span 2;margin-right:12px}
+body.svc-mode.no-left #builder{--L:0px}
+/* route table and firewall check card */
+.chk{position:absolute;left:12px;top:12px;width:min(400px,calc(100% - 70px));max-height:calc(100% - 64px);overflow:auto;background:var(--surface);border:1px solid var(--line-strong);border-left:3px solid var(--brand);border-radius:3px;box-shadow:var(--shadow-lg);padding:12px 14px;z-index:6;font-size:12px;line-height:1.45}
+.chk[hidden]{display:none}
+.chk-h{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:8px}
+.chk-h b{font:800 11.5px/1.2 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--title)}
+.chk-h span{color:var(--muted);font-size:11.5px;text-align:right}
+.chk-p{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;background:var(--surface-2);border:1px solid var(--line);padding:6px 8px;margin-bottom:8px;border-radius:2px}
+.chk-p span{font:700 10px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.chk-p i{font-style:normal;color:var(--muted)}
+.chk table{width:100%;border-collapse:collapse}
+.chk th{text-align:left;font:700 10px/1.2 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--title);padding:5px 6px;border-bottom:1px solid var(--line)}
+.chk td{padding:5px 6px;border-bottom:1px solid var(--line);white-space:nowrap}
+.chk tbody tr{animation:chkin .4s ease both}
+@keyframes chkin{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+.chk tr.win td{background:var(--ok-soft);color:var(--ok);font-weight:700}
+.chk tr.bad td{background:var(--bad-soft);color:var(--bad);font-weight:700}
+.chk tr.cand td{color:var(--ink)}
+.chk tr.miss td{color:var(--faint)}
+.chk tr.skip td{color:var(--faint);opacity:.5}
+.chk tr.grp td{font-weight:700;color:var(--title);background:var(--surface-2)}
+.chk-v{margin-top:9px;font-weight:600}
+.chk-v.ok{color:var(--ok)} .chk-v.no{color:var(--bad)}
+#bsvg .chk-on rect{stroke:var(--accent)!important;stroke-width:3!important}
+@media (prefers-reduced-motion: reduce){.chk tbody tr{animation:none}}
+@media (max-width:1023px){
+  body.svc-mode #builder{display:flex!important}
+  .chk{position:relative;left:auto;top:auto;width:auto;max-height:none;margin:8px}
+}
+
+.chk-h{position:relative;padding-right:24px}
+.chk-x{position:absolute;right:-4px;top:-5px;width:24px;height:24px;border:0;background:none;color:var(--muted);font-size:18px;line-height:1;cursor:pointer}
+.chk-x:hover{color:var(--ink)}
+
+/* check card lives in the Packet flow panel */
+#builder{--B:280px}
+.fbody2{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(340px,40%)}
+.fbody2 .flow-t{min-height:0}
+#b-check.chk{position:static;width:auto;max-height:none;min-height:0;overflow:auto;box-shadow:none;border:0;border-left:1px solid var(--line);border-radius:0;padding:12px 16px;z-index:auto}
+#b-check .chk-empty{color:var(--faint);font-size:12.5px;margin:4px 0 0}
+#b-check .chk-h{padding-right:0}
+@media (max-width:1023px){.fbody2{grid-template-columns:1fr}#b-check.chk{border-left:0;border-top:1px solid var(--line);margin:0}}
+#b-check:empty::before{content:"When a packet reaches a route table, network ACL or security group, its rules appear here with the one that decides highlighted.";display:block;color:var(--faint);font-size:12.5px;padding-top:2px}
+
+/* checks list */
+.chk-list{display:flex;flex-direction:column;gap:4px}
+.chk-item{display:grid;grid-template-columns:18px auto 1fr auto;gap:8px;align-items:baseline;width:100%;text-align:left;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--ok);border-radius:2px;padding:7px 9px;cursor:pointer;font:inherit;color:var(--ink)}
+.chk-item.no{border-left-color:var(--bad)}
+.chk-item i{font-style:normal;font-weight:700;color:var(--ok)} .chk-item.no i{color:var(--bad)}
+.chk-item b{font:700 11.5px/1.3 var(--mono);color:var(--title);white-space:nowrap}
+.chk-item span{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chk-item em{font-style:normal;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.chk-item.rep em{color:var(--reply)}
+.chk-item:hover{border-color:var(--line-strong)}
+.chk-item.open{background:var(--surface-2);border-color:var(--brand-line)}
+.chk-d{border:1px solid var(--line);border-top:0;padding:10px 10px 8px;margin:-4px 0 2px;background:var(--surface)}
+.chk-d .chk-h{margin-bottom:6px}
+
+.btn.tog{display:inline-flex;align-items:center;gap:7px;flex:none}
+.btn.tog svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.6}
+.btn.tog svg .f{fill:currentColor;stroke:none}
+.btn.tog[aria-pressed="true"]{background:var(--brand-soft);border-color:var(--brand);color:var(--brand)}
+.btn.tog[aria-pressed="false"]{color:var(--faint)}
+
+/* ---------- phones and tablets ---------- */
+.menu-btn,.lall,.pal-tg{display:none}
+.canvas-wrap .zoomctl.lz{right:12px;bottom:12px}
+#net{touch-action:pan-y}
+@media (max-width:1023px){
+  /* lessons: current lesson only, full list on demand */
+  .lall{display:inline-flex;align-items:center;margin-left:10px;border:1px solid var(--line-strong);background:var(--surface);color:var(--title);font:700 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:8px 10px;border-radius:2px;cursor:pointer}
+  .ph-r{margin-left:auto}
+  #steps:not(.open) .lrow:not(.cur),#steps:not(.open) .lsec,#steps:not(.open) .rail-f{display:none}
+  #steps:not(.open) .lrow.cur{border-bottom:0}
+  .llist{max-height:none!important;overflow:visible}
+  #steps.open .llist{max-height:60vh!important;overflow-y:auto}
+  /* tour canvas: whole width, taller, pan and zoom */
+  .canvas{overflow:hidden!important;height:auto}
+  #net{min-width:0!important;width:100%;height:auto!important;aspect-ratio:1000/700!important}
+  /* packet flow rows become readable cards */
+  .flow-t{max-height:none!important}
+  .flow-t thead{display:none}
+  .flow-t table,.flow-t tbody{display:block}
+  .flow-t tr{display:block;position:relative;padding:10px 12px 10px 48px;border-bottom:1px solid var(--line)}
+  .flow-t td{display:block;border:0!important;padding:0!important;white-space:normal!important;width:auto!important}
+  .flow-t td:first-child{position:absolute;left:12px;top:10px}
+  .flow-t td:nth-child(2){font-weight:700;color:var(--title)}
+  .flow-t td:nth-child(3),.flow-t td:nth-child(4){display:inline;font-size:12px;color:var(--muted)}
+  .flow-t td:nth-child(3)::after{content:" → "}
+  .flow-t td:nth-child(5){margin-top:3px}
+  .fh{gap:10px;padding:10px 12px}
+  .flegend{flex:1 1 100%;order:3}
+  .flbl{flex:1 1 100%;order:4;white-space:normal}
+  .fh .seg{order:2}
+  /* designer */
+  .pal-h{display:flex!important;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .pal-h b{margin:0!important}
+  .pal-tg{display:inline-flex;border:1px solid var(--line-strong);background:var(--surface);color:var(--title);font:700 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:8px 12px;border-radius:2px;cursor:pointer}
+  .pal-h input{flex:1 1 100%}
+  .b-pal:not(.open) .pal-list,.b-pal:not(.open) .pal-tip,.b-pal:not(.open) #b-find{display:none!important}
+  #builder>.b-pal{order:0}
+  #builder>.b-mid{order:1}
+  #builder>#b-flow{order:2}
+  #builder>.b-side{order:3}
+  body.svc-mode #builder>.lessons{order:0}
+  body.svc-mode #builder>.b-side{order:1}
+  body.svc-mode #builder>.b-mid{order:2}
+  body.svc-mode #builder>#b-flow{order:3}
+  .b-canvas{height:auto!important;aspect-ratio:1/.9;min-height:300px;max-height:70vh}
+  .b-side{max-height:none}
+  #b-panel{overflow:visible}
+  .b-tabs{position:sticky;top:0;z-index:2}
+  .zoomctl button{width:40px;height:40px}
+}
+@media (max-width:760px){
+  .top{display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:8px 12px;height:auto}
+  .brand{flex:1;min-width:0;order:0}
+  .brand .logo,.brand .logo svg{width:32px;height:32px}
+  .brand .bt b{font-size:14px;letter-spacing:.12em;white-space:nowrap}
+  .menu-btn{display:grid;order:1}
+  #hlesson,.hsep,.hicons,.top>.grow{display:none!important}
+  .top>.hg:has(#viewsw){order:5;flex:1 1 100%}
+  #viewsw{width:100%}
+  #viewsw button{flex:1;height:36px}
+  #hdesign{order:6;flex:1 1 100%}
+  .hacts{width:100%}
+  .hacts>.btn,.hacts>.menu{flex:1}
+  .hacts .menu>summary{width:100%;justify-content:center}
+  .hacts .menu-p{left:auto;right:0}
+  .top>.hg:has(#dimsw),#themesw{display:none}
+  body.menu-open .top>.hg:has(#dimsw){display:flex;order:7;flex:1 1 auto}
+  body.menu-open #themesw{display:flex;order:8}
+  .menu-btn[aria-expanded="true"]{background:var(--brand-soft);color:var(--brand)}
+  .ph{padding:12px 14px}
+  .ph h2,.fh h2{font-size:14px}
+  .lesson{padding:16px 14px}
+  .ov-h h1{font-size:21px}
+  .lbtn{padding:10px}
+  .fbody .caption{padding:12px 14px}
+  .btn{padding:10px 14px}
+  .lessons .tasks .btn{width:100%}
+  #b-dlg .in{padding:18px 16px 14px}
+  .tpl .row .btn{flex:1}
+}
+
+@media (max-width:760px){#b-panel p.sm:has(>span.mut){display:none}}
+@media (max-width:1023px){.canvas-wrap .zoomctl.lz{flex-direction:row;right:8px;bottom:8px}.canvas-wrap .zoomctl.lz button{width:34px;height:32px}.canvas-wrap .zoomctl.lz button+button{border-top:0;border-left:1px solid var(--line)}}
 </style>
-<script>try{var t=localStorage.getItem("ftp-theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t;}catch(e){}try{if(localStorage.getItem("ftp-dim")!=="2d")document.documentElement.classList.add("iso");}catch(e){document.documentElement.classList.add("iso");}</script>
+<script>var t=null,d=null;try{t=localStorage.getItem("ftp-theme2");d=localStorage.getItem("ftp-dim2");}catch(e){}if(t!=="auto")document.documentElement.dataset.theme=t==="dark"?"dark":"light";if(d==="3d")document.documentElement.classList.add("iso");</script>
 </head>
 <body data-view="learn">
 <header class="top">
@@ -1215,11 +1371,12 @@ html:not(.iso) .canvas,html:not(.iso) .b-canvas{background-image:linear-gradient
   <div class="hg" id="hlesson"><span class="hl"><span>Lesson</span><b id="hl-name"></b></span><div class="boxes" id="hboxes" role="group" aria-label="Lessons"></div></div>
   <div class="hg" id="hdesign"><span class="hl"><span>Design</span></span><div class="hacts"><button class="btn primary" data-b="templates">Templates</button><button class="btn" data-b="scratch">New</button><details class="menu"><summary class="btn">Share</summary><div class="menu-p"><button data-b="share">Copy design as text</button><button data-b="paste">Paste a design</button></div></details></div></div>
   <span class="grow"></span>
-  <div class="hg"><span class="hl"><span>View</span></span><div class="boxes" id="dimsw" role="group" aria-label="Canvas view"><button data-b="dim" data-v="2d" aria-pressed="false" title="Flat view">2D</button><button data-b="dim" data-v="3d" aria-pressed="true" title="Isometric 3D view">3D</button></div></div>
+  <div class="hg"><span class="hl"><span>View</span></span><div class="boxes" id="dimsw" role="group" aria-label="Canvas view"><button data-b="dim" data-v="2d" aria-pressed="true" title="Flat view">2D</button><button data-b="dim" data-v="3d" aria-pressed="false" title="Isometric 3D view">3D</button></div></div>
   <div class="hsep"></div>
   <div class="hicons"><button class="ib" data-b="panel" data-v="left" aria-pressed="true" title="Show or hide the left panel" aria-label="Left panel"><svg viewBox="0 0 20 20"><rect x="2.5" y="3.5" width="15" height="13" rx="1"/><rect class="f" x="2.5" y="3.5" width="5" height="13"/></svg></button><button class="ib" data-b="panel" data-v="bottom" aria-pressed="true" title="Show or hide the packet flow" aria-label="Packet flow panel"><svg viewBox="0 0 20 20"><rect x="2.5" y="3.5" width="15" height="13" rx="1"/><rect class="f" x="2.5" y="11.5" width="15" height="5"/></svg></button><button class="ib" data-b="panel" data-v="right" aria-pressed="true" title="Show or hide the right panel" aria-label="Right panel"><svg viewBox="0 0 20 20"><rect x="2.5" y="3.5" width="15" height="13" rx="1"/><rect class="f" x="12.5" y="3.5" width="5" height="13"/></svg></button></div>
   <div class="hsep"></div>
   <div class="seg" id="themesw" role="group" aria-label="Colour theme"><button data-b="theme" data-v="auto" aria-pressed="true" aria-label="Match system theme" title="Match system"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="12" height="8.5" rx="1"/><path d="M5.5 14h5"/></svg></button><button data-b="theme" data-v="light" aria-pressed="false" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="8" cy="8" r="3" fill="currentColor"/><path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M3.4 12.6l1-1M11.6 4.4l1-1"/></svg></button><button data-b="theme" data-v="dark" aria-pressed="false" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M13.5 9.5A5.5 5.5 0 0 1 6.5 2.5a5.5 5.5 0 1 0 7 7Z"/></svg></button></div>
+  <button class="ib menu-btn" data-b="menu" aria-expanded="false" aria-label="View and theme settings" title="Settings"><svg viewBox="0 0 20 20"><path d="M3 6h14M3 14h14"/><circle cx="7" cy="6" r="2" fill="var(--surface)"/><circle cx="13" cy="14" r="2" fill="var(--surface)"/></svg></button>
 </header>
 <main>
   <nav class="lessons pnl" id="steps" aria-label="Lessons"></nav>
@@ -1241,11 +1398,12 @@ html:not(.iso) .canvas,html:not(.iso) .b-canvas{background-image:linear-gradient
           <g id="pkt" class="off"><circle class="halo" r="15"/><circle class="core" r="7.5"/></g>
           <g id="tag" class="off"><rect width="214" height="38" rx="8"/><text class="k" x="10" y="15" id="tag-k"></text><text class="a" x="10" y="30"><tspan id="tag-src"></tspan><tspan> → </tspan><tspan id="tag-dst"></tspan></text></g>
         </svg>
-    </div></div>
+    </div><div class="zoomctl lz"><button data-act="lzoom" data-v="0.8" aria-label="Zoom in" title="Zoom in">+</button><button data-act="lzoom" data-v="1.25" aria-label="Zoom out" title="Zoom out">−</button><button data-act="lfit" aria-label="Show the whole network" title="Show the whole network"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg></button></div></div>
   </section>
   <aside class="panel pnl" id="panel"><div class="ph"><h2>Lesson overview</h2></div><article class="lesson" id="lesson"></article><section class="controls" id="controls" hidden></section></aside>
   <section class="flow pnl" id="flow">
     <div class="fh"><h2>Packet flow</h2><div class="flegend"><span><i></i>Request</span><span><i class="rep"></i>Reply</span><span><i class="bad"></i>Dropped</span></div><span class="grow"></span>
+      <button class="btn tog" data-b="follow" aria-pressed="true" title="Zoom in on the part of the network the packet is crossing"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5"/><circle cx="8" cy="8" r="1.6" class="f"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2"/></svg>Follow</button>
       <div class="seg boxes" id="mode" role="group" aria-label="Playback"><button data-act="mode" data-v="step" aria-pressed="false">Step</button><button data-act="mode" data-v="play" aria-pressed="true">Play</button><button data-act="mode" data-v="fast" aria-pressed="false">Fast</button></div></div>
     <div class="fbody">
       <div class="caption" id="caption" data-tone="idle" aria-live="polite">
@@ -1277,9 +1435,10 @@ html:not(.iso) .canvas,html:not(.iso) .b-canvas{background-image:linear-gradient
   </aside>
   <section class="flow pnl" id="b-flow">
     <div class="fh"><h2>Packet flow</h2><div class="flegend"><span><i></i>Request</span><span><i class="rep"></i>Reply</span><span><i class="bad"></i>Blocked</span></div><span class="flbl" id="b-flow-lbl"></span><span class="grow"></span>
+      <button class="btn tog" data-b="follow" aria-pressed="true" title="Zoom in on the part of the network the packet is crossing"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5"/><circle cx="8" cy="8" r="1.6" class="f"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2"/></svg>Follow</button>
       <div class="seg boxes" id="b-mode" role="group" aria-label="Playback"><button data-b="mode" data-v="step" aria-pressed="false">Step</button><button data-b="mode" data-v="play" aria-pressed="true">Play</button><button data-b="mode" data-v="fast" aria-pressed="false">Fast</button><button data-b="mode" data-v="skip" aria-pressed="false">Instant</button></div>
       <button class="btn primary" data-b="next-hop" id="b-next" hidden>Next hop</button><button class="btn" data-b="replay" id="b-replay" hidden>Replay</button></div>
-    <div class="flow-t" data-empty="Send a packet from the Test tab, or replay a saved check, to see every hop it takes."><table><thead><tr><th>No.</th><th>Where</th><th>Source</th><th>Destination</th><th>What happens</th></tr></thead><tbody id="b-trace"></tbody></table></div>
+    <div class="fbody2"><div class="flow-t" data-empty="Send a packet from the Test tab, or replay a saved check, to see every hop it takes."><table><thead><tr><th>No.</th><th>Where</th><th>Source</th><th>Destination</th><th>What happens</th></tr></thead><tbody id="b-trace"></tbody></table></div><div class="chk" id="b-check" aria-live="polite"></div></div>
   </section>
 </section>
 <dialog id="b-dlg"></dialog>
@@ -1721,15 +1880,24 @@ function renderControls(){
   }
   box.innerHTML=chapter===7?h:'<details class="console"'+(conOpen?' open':'')+'><summary><b>Network console</b><small>Switch parts on and off, edit routes, send any packet</small></summary><div class="console-b">'+h+'</div></details>';
 }
+window.FTP_SVCL=[['sg','Security groups','A firewall on each server'],['nacl','Network ACLs','A firewall on each subnet'],['alb','Load balancers','One address, many servers'],['data','RDS and ElastiCache','Private databases and caches'],['compute','EKS and Lambda','Containers and functions'],['endpoints','VPC endpoints and S3','Private paths to AWS services'],['apigw','API Gateway','A managed front door for APIs'],['edge','CloudFront, Route 53 and WAF','The edge of your application'],['peering','VPC peering','Joining two VPCs'],['tgw','Transit gateway and VPN','A hub for many networks']];
+window.FTP_SVC_DONE=new Set();
 function renderSteps(){
   const TAG=['The finished network','Your own private network','Public and private zones','The door to the internet','Where every packet goes','Out, but never in','Private access to S3','Break things on purpose'];
-  $('#hboxes').innerHTML=CH.map((c,i)=>`<button data-act="chapter" data-ch="${i}" aria-pressed="${i===chapter}" title="${c.label}">${i}</button>`).join('');
-  $('#hl-name').textContent=CH[chapter].label;
-  $('#steps').innerHTML=`<div class="ph"><h2>Lessons</h2><span class="ph-r">${chapter+1} / ${CH.length}</span></div><div class="lprog"><i style="width:${(chapter+1)/CH.length*100}%"></i></div><div class="llist">`+
-    CH.map((c,i)=>{const st=i<chapter?'done':i===chapter?'cur':'todo';
-      return `<div class="lrow ${st}"><button class="lbtn" data-act="chapter" data-ch="${i}"${i===chapter?' aria-current="step"':''}><i class="dot"></i><span class="t"><b>${c.label}</b><small>${TAG[i]}</small></span><span class="chev"></span></button>`+
-        (i===chapter?(c.tasks.length?'<ol class="tasks" id="tasks"></ol>':'<p class="lfree">No set steps here. Load a ready-made network or change anything in the console, then send packets.</p>'):'')+'</div>';}).join('')+
-    '</div><div class="rail-f"><button class="rail-build" data-b="view" data-v="design"><b>Design your own</b><small>Drag and drop a network, then test it end to end</small></button></div>';
+  const svc=window.FTP_SVC||null,SV=window.FTP_SVCL,done=window.FTP_SVC_DONE;
+  $('#hboxes').innerHTML=CH.map((c,i)=>`<button data-act="chapter" data-ch="${i}" aria-pressed="${!svc&&i===chapter}" title="${c.label}">${i}</button>`).join('');
+  $('#hl-name').textContent=svc?svc.label:CH[chapter].label;
+  const total=CH.length+SV.length,at=svc?CH.length+SV.findIndex(x=>x[0]===svc.k)+1:chapter+1;
+  const op=$('#steps').classList.contains('open');
+  let h=`<div class="ph"><h2>Lessons</h2><span class="ph-r">${at} / ${total}</span><button class="lall" data-b="lall" aria-expanded="${op}">${op?'Hide list':'All lessons'}</button></div><div class="lprog"><i style="width:${at/total*100}%"></i></div><div class="llist"><div class="lsec">Networking basics</div>`;
+  h+=CH.map((c,i)=>{const cur=!svc&&i===chapter,st=cur?'cur':i<chapter?'done':'todo';
+    return `<div class="lrow ${st}"><button class="lbtn" data-act="chapter" data-ch="${i}"${cur?' aria-current="step"':''}><i class="dot"></i><span class="t"><b>${c.label}</b><small>${TAG[i]}</small></span><span class="chev"></span></button>`+
+      (cur?(c.tasks.length?'<ol class="tasks" id="tasks"></ol>':'<p class="lfree">No set steps here. Load a ready-made network or change anything in the console, then send packets.</p>'):'')+'</div>';}).join('');
+  h+='<div class="lsec">AWS services</div>'+SV.map(([k,label,tag])=>{const cur=svc&&svc.k===k,st=cur?'cur':done.has(k)?'done':'todo';
+    return `<div class="lrow ${st}"><button class="lbtn" data-b="svc-lesson" data-v="${k}"${cur?' aria-current="step"':''}><i class="dot"></i><span class="t"><b>${label}</b><small>${tag}</small></span><span class="chev"></span></button>`+
+      (cur?'<ol class="tasks">'+svc.steps.map((t,j)=>`<li class="${j<svc.i?'done':j===svc.i?'cur':'todo'}"><button class="tstep" data-b="tut-go" data-i="${j}"><p>${t}</p></button></li>`).join('')+'</ol>':'')+'</div>';}).join('');
+  h+='</div><div class="rail-f"><button class="rail-build" data-b="view" data-v="design"><b>Design your own</b><small>Drag and drop a network, then test it end to end</small></button></div>';
+  $('#steps').innerHTML=h;
   const cur=$('#steps .lrow.cur'); if(cur&&cur.scrollIntoView&&window.innerWidth>=1024) cur.scrollIntoView({block:'nearest'});
 }
 const FACTS=[
@@ -1804,12 +1972,43 @@ function edgePts(a,b){
   if(EDGES[a+'-'+b]) return [a+'-'+b,EDGES[a+'-'+b]];
   return [b+'-'+a,[...EDGES[b+'-'+a]].reverse()];
 }
+const NV={x:0,y:0,w:1000,h:620};let cv={...NV},camN=0;
+const followOn=()=>document.documentElement.dataset.follow!=='off';
+function setVB(){$('#net').setAttribute('viewBox',cv.x+' '+cv.y+' '+cv.w+' '+cv.h);}
+function camTo(r,ms){const tk=++camN,f={...cv},t0=performance.now();if(RM||!ms){cv={...r};setVB();return;}
+  const st=now=>{if(tk!==camN)return;const t=Math.min(1,(now-t0)/ms),e=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;cv={x:f.x+(r.x-f.x)*e,y:f.y+(r.y-f.y)*e,w:f.w+(r.w-f.w)*e,h:f.h+(r.h-f.h)*e};setVB();if(t<1)requestAnimationFrame(st);};requestAnimationFrame(st);}
+function camSeg(pts,ms){
+  if(!followOn()||ucam)return;
+  const q=pts.map(p=>P(p[0],p[1]));
+  const x0=Math.min(...q.map(a=>a.x))-110,x1=Math.max(...q.map(a=>a.x))+230,y0=Math.min(...q.map(a=>a.y))-90,y1=Math.max(...q.map(a=>a.y))+90;
+  const ar=NV.w/NV.h,mw=window.innerWidth<760?400:560;let w=Math.max(x1-x0,mw),h=Math.max(y1-y0,mw/ar);
+  if(w/h<ar)w=h*ar;else h=w/ar;
+  if(w>NV.w){w=NV.w;h=NV.h;}
+  let x=(x0+x1)/2-w/2,y=(y0+y1)/2-h/2;
+  x=Math.max(-60,Math.min(x,NV.w+60-w));y=Math.max(-60,Math.min(y,NV.h+60-h));
+  camTo({x,y,w,h},ms);
+}
+function camHome(ms){if(ms)camTo(NV,ms);else{camN++;cv={...NV};setVB();}}
+let ucam=false;
+function lzoom(k){ucam=true;camN++;const cx=cv.x+cv.w/2,cy=cv.y+cv.h/2,w=Math.min(1400,Math.max(220,cv.w*k)),s=w/cv.w;cv={x:cx-cv.w*s/2,y:cy-cv.h*s/2,w,h:cv.h*s};setVB();}
+(()=>{const svg=$('#net'),tp=new Map();let pan=null,pinch=null;
+  const upp=()=>{const r=svg.getBoundingClientRect();return Math.max(cv.w/(r.width||1),cv.h/(r.height||1));};
+  svg.addEventListener('pointerdown',e=>{tp.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(tp.size===2){const [a,b]=[...tp.values()];pinch={d:Math.hypot(a.x-b.x,a.y-b.y)||1,c:{...cv}};pan=null;}
+    else pan={x:e.clientX,y:e.clientY,c:{...cv},moved:false};});
+  window.addEventListener('pointermove',e=>{if(!tp.has(e.pointerId))return;tp.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(pinch&&tp.size>=2){const [a,b]=[...tp.values()],d=Math.hypot(a.x-b.x,a.y-b.y);if(!d)return;const c0=pinch.c,w=Math.min(1400,Math.max(220,c0.w*pinch.d/d)),s=w/c0.w;
+      cv={x:c0.x+c0.w/2-c0.w*s/2,y:c0.y+c0.h/2-c0.h*s/2,w,h:c0.h*s};ucam=true;camN++;setVB();return;}
+    if(pan){const dx=e.clientX-pan.x,dy=e.clientY-pan.y;if(!pan.moved&&Math.abs(dx)+Math.abs(dy)<6)return;pan.moved=true;ucam=true;camN++;const u=upp();cv={...pan.c,x:pan.c.x-dx*u,y:pan.c.y-dy*u};setVB();}});
+  const up=e=>{tp.delete(e.pointerId);if(tp.size<2)pinch=null;if(!tp.size)pan=null;};
+  window.addEventListener('pointerup',up);window.addEventListener('pointercancel',up);
+})();
 function placePkt(x,y){
   {const q=P(x,y);x=q.x;y=q.y;}
   $('#pkt').setAttribute('transform',`translate(${x} ${y})`);
   let tx=x+16, ty=y-48;
-  if(tx+214>994) tx=x-16-214;
-  if(ty<4) ty=y+14;
+  if(tx+214>cv.x+cv.w-6) tx=x-16-214;
+  if(ty<cv.y+4) ty=y+14;
   $('#tag').setAttribute('transform',`translate(${tx} ${ty})`);
 }
 function setTag(p){
@@ -1841,7 +2040,7 @@ function hit(st){
 function clearFx(){
   $$('.edge-lit').forEach(e=>e.setAttribute('class','edge-lit'+(e.classList.contains('off')?' off':'')));
   $('#pkt').setAttribute('class','off'); $('#tag').setAttribute('class','off'); $('#mark').setAttribute('class','off');
-  clearHits(); clearSel(); ui.tag=null;
+  clearHits(); clearSel(); ui.tag=null; ucam=false; camHome();
   $$('#net .aim').forEach(e=>e.classList.remove('aim'));
 }
 function animateMove(from,to,pkt,token){
@@ -1851,6 +2050,7 @@ function animateMove(from,to,pkt,token){
   const seg=[]; let total=0;
   for(let i=1;i<pts.length;i++){ const d=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]); seg.push(d); total+=d; }
   const dur=RM?0:total/(ui.mode==='fast'?1250:520)*1000;
+  camSeg(pts,Math.max(300,Math.min(dur||400,900)));
   const pos=t=>{
     let d=t*total, i=0;
     while(i<seg.length-1&&d>seg[i]){ d-=seg[i]; i++; }
@@ -1875,7 +2075,7 @@ function gate(){
 }
 async function play(st,token){
   if(st.t==='say'){
-    const n=NODES[st.node]; setTag(st.pkt); placePkt(n.x,n.y); ping(st.node);
+    const n=NODES[st.node]; setTag(st.pkt); placePkt(n.x,n.y); camSeg([[n.x,n.y]],600); ping(st.node);
     caption({tone:st.pkt.kind,badge:st.badge,text:st.text}); log(st.badge,st.text);
     await gate();
   }else if(st.t==='move'){
@@ -1896,6 +2096,7 @@ async function play(st,token){
 }
 function finish(st){
   ui.running=false; clearHits();
+  setTimeout(()=>{if(!ui.running&&followOn()&&!ucam)camTo(NV,900);},1600);
   const n=NODES[st.node], m=$('#mark');
   m.setAttribute('class',st.result); m.setAttribute('transform',`translate(${P(n.x,n.y).x+22} ${P(n.x,n.y).y-30})`);
   m.querySelector('path').setAttribute('d',{ok:'M-5 0.5L-1.5 4L5 -3.5',drop:'M-4 -4L4 4M4 -4L-4 4',blocked:'M-5.5 0H5.5'}[st.result]);
@@ -1993,6 +2194,8 @@ function act(a,b){
     case 'mode': ui.mode=d.v; $$('#mode button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===d.v))); if(d.v!=='step'&&ui.resume){ const r=ui.resume; ui.resume=null; capActions([]); r(); } break;
     case 'trace': { const dr=$('#drawer'); dr.hidden=!dr.hidden; break; }
     case 'info': showInfo(d.info); break;
+    case 'lzoom': lzoom(+d.v); break;
+    case 'lfit': ucam=false; camHome(400); break;
   }
 }
 document.addEventListener('click',e=>{
@@ -2021,7 +2224,7 @@ buildDiagram();
 { const cv=$('.canvas'); if(cv&&window.innerWidth<1024) requestAnimationFrame(()=>{ cv.scrollLeft=Math.max(0,(cv.scrollWidth-cv.clientWidth)/2-40); }); }
 const first=CH.findIndex(c=>c.slug===location.hash.slice(1));
 setChapter(first>=0?first:0,true);
-window.FTP={redraw:()=>{stopRun();clearFx();buildDiagram();render();},build,get state(){return state},set state(v){state=v}};
+window.FTP={camHome,redraw:()=>{stopRun();clearFx();buildDiagram();render();},renderSteps,stop:()=>{stopRun();clearFx();},build,get state(){return state},set state(v){state=v}};
 })();
 </script>
 <script>
@@ -2146,15 +2349,16 @@ function simulate(D,t){
     const r=aclCheck(D,sn,dirn,p),a=r.acl;
     const how=r.rule?'Rule '+r.rule.n+' matches: '+r.rule.action+' '+ruleWhat(r.rule)+(dirn==='in'?' from ':' to ')+r.rule.cidr+'.':'No numbered rule matches, so the final rule applies: deny.';
     const where=(dirn==='in'?'Entering ':'Leaving ')+'subnet '+sn.name+'. ';
-    if(r.ok)add('nacl:'+sn.id,'nacl','ok','Network ACL '+a.name+' allows it',where+how,{t:'nacl',id:a.id});
-    else drop('nacl:'+sn.id,'nacl','Blocked by network ACL '+a.name,where+how+(dir==='rep'?' Network ACLs are stateless, so a reply needs a rule of its own. This reply is headed for port '+p.dport+', one of the temporary ports (1024-65535) that clients use.':''),{t:'nacl',id:a.id});
+    if(r.ok)add('nacl:'+sn.id,'nacl','ok','Network ACL '+a.name+' allows it',where+how,{t:'nacl',id:a.id,dirn});
+    else drop('nacl:'+sn.id,'nacl','Blocked by network ACL '+a.name,where+how+(dir==='rep'?' Network ACLs are stateless, so a reply needs a rule of its own. This reply is headed for port '+p.dport+', one of the temporary ports (1024-65535) that clients use.':''),{t:'nacl',id:a.id,dirn});
   }
   function sg(node,dirn){
-    if(node.type==='nat'||dir==='rep')return;
+    if(node.type==='nat')return;
+    if(dir==='rep'){if((node.sgs||[]).length)add('node:'+node.id,'sg','ok','Security group lets the reply through','Security groups are stateful: this reply belongs to a connection that was already allowed, so no rule needs to match.',{t:'sg',id:node.sgs[0],dirn,node:node.id,stateful:true});return;}
     const peer=dirn==='inb'?p.src:p.dst,r=sgCheck(D,node,dirn,peer,p.proto,p.dport);
-    if(r.ok){const u=r.sg[dirn][r.i];add('node:'+node.id,'sg','ok','Security group '+r.sg.name+' allows it',(dirn==='inb'?'Inbound':'Outbound')+' rule matches: '+ruleWhat(u)+(dirn==='inb'?' from ':' to ')+u.peer+'.',{t:'sg',id:r.sg.id});return;}
+    if(r.ok){const u=r.sg[dirn][r.i];add('node:'+node.id,'sg','ok','Security group '+r.sg.name+' allows it',(dirn==='inb'?'Inbound':'Outbound')+' rule matches: '+ruleWhat(u)+(dirn==='inb'?' from ':' to ')+u.peer+'.',{t:'sg',id:r.sg.id,dirn,node:node.id});return;}
     const names=(node.sgs||[]).map(id=>(by(D,'sgs',id)||{}).name).filter(Boolean).join(', ')||'no security group';
-    drop('node:'+node.id,'sg','Blocked by the security group on '+node.name,'No '+(dirn==='inb'?'inbound':'outbound')+' rule in '+names+' allows '+what()+(dirn==='inb'?' from '+p.src:' to '+p.dst)+'. Security groups only contain allow rules; anything not listed is dropped.',{t:'sg',id:(node.sgs||[])[0]});
+    drop('node:'+node.id,'sg','Blocked by the security group on '+node.name,'No '+(dirn==='inb'?'inbound':'outbound')+' rule in '+names+' allows '+what()+(dirn==='inb'?' from '+p.src:' to '+p.dst)+'. Security groups only contain allow rules; anything not listed is dropped.',{t:'sg',id:(node.sgs||[])[0],dirn,node:node.id});
   }
   function leaveEni(node){
     tick();
@@ -2439,7 +2643,7 @@ function findings(D){
   D.vgws.forEach(g=>{if(!D.rts.some(rt=>rt.vpc===g.vpc&&rt.routes.some(r=>r.target===g.id)))f.push({el:'vgw:'+g.id,text:V(g.vpc).name+' has a VPN, but none of its route tables points to the virtual private gateway.'});});
   return f;
 }
-return{ip2n,n2ip,cidr,inC,overlap,within,isPrivate,SVC,S3DEF,s3Access,ipList,prange,routeLookup,targetExists,targetName,isPublic,simulate,findings,nameAt};
+return{aclCheck,sgCheck,protoOk,portOk,ip2n,n2ip,cidr,inC,overlap,within,isPrivate,SVC,S3DEF,s3Access,ipList,prange,routeLookup,targetExists,targetName,isPublic,simulate,findings,nameAt};
 })();
 if(typeof module!=='undefined')module.exports=NETSIM;
 </script>
@@ -2447,7 +2651,7 @@ if(typeof module!=='undefined')module.exports=NETSIM;
 (()=>{'use strict';
 const E=NETSIM,$=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
 const RM=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-const KEY='ftp-design-v2',AZS=['us-east-1a','us-east-1b','us-east-1c'];
+const KEY='ftp-design-v3',AZS=['us-east-1a','us-east-1b','us-east-1c'];
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const clampv=(v,a,b)=>Math.max(a,Math.min(b<a?a:b,v));
 const IC={
@@ -2621,7 +2825,6 @@ const TPLS=[
   {k:'alb',level:'Intermediate',name:'Load balancer and API Gateway',desc:'Two Availability Zones, a public load balancer in front of private app servers, and an API Gateway that reaches them through a VPC link.'},
   {k:'hub',level:'Intermediate',name:'Transit gateway and office VPN',desc:'Two VPCs joined by a transit gateway, with an encrypted VPN to an office network.'},
   {k:'micro',level:'Advanced',name:'Private microservices on EKS',desc:'Only the web app faces the internet. EKS microservices share one PostgreSQL database, reach AWS services through endpoints with no NAT gateway, and the S3 bucket only accepts requests through its endpoint.'},
-  {k:'uit',level:'Advanced',name:'UltraIntake product architecture',desc:'A CloudFront edge with Route 53, WAF and a certificate, API Gateway into EKS, Redis, PostgreSQL, Lambda with Bedrock, and the Ultra Adapter’s VPN link to the client’s Argus Safety database.'}
 ];
 const TPL={
   two(){
@@ -2702,73 +2905,6 @@ const TPL={
     tryIt('A client calls the API',tt('internet','svc:apigw',443));
     mark('Lock in the expected behaviour',LOCK,'Six checks: the website and the API are public, the app servers and the database aren’t, and the private side can still reach the internet.');
     D.tests=[ex(tt('internet','node:'+lb.id,443),true),ex(tt('internet','svc:apigw',443),true),ex(tt('internet','node:'+a1.id,8080),false),ex(tt('node:'+a1.id,'node:'+d1.id,3306),true),ex(tt('node:'+a2.id,'internet',443),true),ex(tt('internet','node:'+d1.id,3306),false)];
-  },
-  uit(){
-    D.ext={x:120,y:150};D.svc=svcCol(1320,404,88);
-    mark('Create the VPC','A VPC is a private, isolated network in one AWS Region, with an address range you choose.','All of UltraIntake’s compute and data live in ultraintake-vpc. Its range, 10.0.0.0/16, must not overlap the client network it will reach over VPN (192.168.0.0/16), or the routes would conflict.');
-    const v=mkVpc({name:'ultraintake-vpc',cidr:'10.0.0.0/16',x:300,y:320,w:810,h:772});
-    const sub=(name,kind,cidr,x,y,w,h)=>mkSubnet({vpc:v.id,name,kind,az:AZS[0],cidr,x,y,w,h,igw:true});
-    mark('Add an internet gateway and a public subnet for NAT','The internet gateway is the VPC’s door to the internet. A subnet is public when its route table points 0.0.0.0/0 at it.','Nothing in UltraIntake is reachable straight from the internet, so the only public subnet, public-nat, exists to hold the NAT gateway.');
-    mkIgw(v);
-    const pub=sub('public-nat','public','10.0.0.0/24',22,52,300,196);
-    mark('Add a private subnet for each tier','Private subnets have no route to the internet gateway.','As in your diagram, each tier gets its own subnet: the load balancer, EKS, Redis, RDS, the Ultra Adapter and Lambda. Separate subnets let you give one tier its own route table or network ACL later, for example to fence off the database.');
-    const slb=sub('private-lb','private','10.0.1.0/24',344,52,444,196);
-    const sek=sub('private-eks','private','10.0.10.0/24',22,266,300,216),srd=sub('private-redis','private','10.0.20.0/24',344,266,210,216),sdb=sub('private-rds','private','10.0.21.0/24',576,266,212,216);
-    const sad=sub('private-ec2','private','10.0.30.0/24',22,500,300,196),sfn=sub('private-lambda','private','10.0.40.0/24',344,500,444,196);
-    mark('Add a NAT gateway','Lets private workloads start connections to the internet without being reachable from it.','EKS pods and Lambda call SQS, SES, Bedrock and Firebase. The private route table now sends 0.0.0.0/0 to nat-a, so that traffic leaves under one fixed Elastic IP that partners can allow-list.');
-    const nat=mkNode({type:'nat',subnet:pub.id,name:'nat-a',x:150,y:104,pub:true});
-    RT(sek.rt).routes.push({dest:'0.0.0.0/0',target:nat.id});
-    mark('Run the UltraIntake services on EKS','EKS runs containers in pods. With the VPC CNI each pod gets a private address from its subnet, so security groups apply to it as they do to a server.','uit-api serves the application’s API and uit-worker processes cases in the background. eks-sg lets the pods call each other on port 8080.');
-    const eks=mkSg(v,'eks-sg','empty');eks.inb.push({proto:'tcp',ports:'8080',peer:eks.id});
-    const a1=mkNode({type:'eks',subnet:sek.id,name:'uit-api',x:90,y:120,sgs:[eks.id]});
-    const a2=mkNode({type:'eks',subnet:sek.id,name:'uit-worker',x:212,y:120,sgs:[eks.id]});
-    tryIt('uit-worker reads from SQS',tt('node:'+a2.id,'svc:sqs',443));
-    mark('Add the Redis cache','ElastiCache Redis is an in-memory cache inside your VPC, with private addresses only.','uit-redis holds sessions and frequent lookups, so the API doesn’t query PostgreSQL for every request. redis-sg admits only eks-sg, on port 6379.');
-    const rcs=mkSg(v,'redis-sg','empty');rcs.inb.push({proto:'tcp',ports:'6379',peer:eks.id});
-    const rc=mkNode({type:'redis',subnet:srd.id,name:'uit-redis',x:105,y:120,sgs:[rcs.id]});
-    tryIt('uit-api reads from Redis',tt('node:'+a1.id,'node:'+rc.id,6379));
-    mark('Add the PostgreSQL database','An RDS database inside the VPC, with its own security group.','uit-postgres stores cases and configuration. rds-sg admits the EKS pods on port 5432 and nothing from outside the VPC.');
-    const dbs=mkSg(v,'rds-sg','empty');dbs.inb.push({proto:'tcp',ports:'5432',peer:eks.id});
-    const pg=mkNode({type:'rds',subnet:sdb.id,name:'uit-postgres',x:106,y:120,sgs:[dbs.id],engine:'postgres',port:5432});
-    tryIt('uit-api queries PostgreSQL',tt('node:'+a1.id,'node:'+pg.id,5432));
-    tryIt('A stranger tries the database',tt('internet','node:'+pg.id,5432));
-    mark('Reach the file storage bucket privately','A gateway endpoint adds a route that carries S3 traffic over the AWS private network, at no charge.','Case documents go to the file storage bucket. The endpoint keeps that traffic off the internet and off the NAT gateway’s per-gigabyte bill. The bucket keeps Block Public Access on.');
-    mkGwe(v,'s3',[sek.rt]);
-    tryIt('uit-api saves a document',tt('node:'+a1.id,'svc:s3',443));
-    tryIt('Anyone on the internet tries the bucket',tt('internet','svc:s3',443));
-    mark('Put API Gateway in front, through a VPC link','API Gateway is a managed API front door outside your VPC. It reaches private services through a VPC link and an internal load balancer.','uit-api-gateway handles throttling and authorisation for every API call. It reaches api-lb through the VPC link, and api-lb-sg admits only the link, so the pods are never exposed. eks-sg now also admits api-lb-sg.');
-    const lbs=mkSg(v,'api-lb-sg','empty');eks.inb.unshift({proto:'tcp',ports:'8080',peer:lbs.id});
-    const lb=mkNode({type:'alb',subnet:slb.id,name:'api-lb',x:310,y:104,sgs:[lbs.id],scheme:'internal',port:80,target:a1.id,tport:8080});
-    D.api={x:680,y:150,name:'uit-api-gateway',type:'regional',target:lb.id,link:''};
-    const g=apiLink();allowLink(g);const lk=N(D.api.link);if(lk){lk.x=130;lk.y=104;}
-    tryIt('A client calls the API',tt('internet','svc:apigw',443));
-    mark('Add the edge: Route 53, WAF, certificate and CloudFront','None of these live in a VPC. Route 53 resolves the name, Certificate Manager supplies the TLS certificate, WAF filters requests, and CloudFront serves content and forwards API calls.','Users and admins open app.ultraintake.example. CloudFront serves the static UI pages from a private bucket and passes API calls on to API Gateway. Afterwards, try blocking an address in WAF.');
-    D.cdn={x:510,y:150,name:'app.ultraintake.example',dns:true,cert:true,waf:true,block:''};
-    tryIt('A user opens the website',tt('internet','cdn:ui',443));
-    tryIt('The UI calls the API',tt('internet','cdn:api',443));
-    mark('Add the Lambda function for AI processing','A Lambda function attached to the VPC gets a private address in a subnet and never a public IP.','uit-lambda calls Bedrock for AI processing and reads from PostgreSQL. rds-sg now admits lambda-sg as well.');
-    const fns=mkSg(v,'lambda-sg','empty');dbs.inb.push({proto:'tcp',ports:'5432',peer:fns.id});
-    const fn=mkNode({type:'lambda',subnet:sfn.id,name:'uit-lambda',x:222,y:104,sgs:[fns.id]});
-    tryIt('uit-lambda calls Bedrock',tt('node:'+fn.id,'svc:bedrock',443));
-    tryIt('uit-lambda queries PostgreSQL',tt('node:'+fn.id,'node:'+pg.id,5432));
-    mark('Send notifications: SES and Firebase','SES is AWS’s email service. Firebase is a third-party push service on the internet.','Both are reached through the NAT gateway: SES for email notifications on port 587, and Firebase for browser push notifications.');
-    const fb={id:nid('ext'),name:'Firebase push',ip:'198.51.100.90',x:120,y:400};D.exts.push(fb);
-    tryIt('uit-api sends an email',tt('node:'+a1.id,'svc:ses',587));
-    tryIt('uit-api sends a push notification',tt('node:'+a1.id,'ext:'+fb.id,443));
-    mark('Add the Ultra Adapter','An EC2 instance in its own private subnet.','ultra-adapter delivers processed cases to client safety systems. adapter-sg admits only the EKS pods, on port 8080.');
-    const ads=mkSg(v,'adapter-sg','empty');ads.inb.push({proto:'tcp',ports:'8080',peer:eks.id});
-    const ad=mkNode({type:'ec2',subnet:sad.id,name:'ultra-adapter',x:150,y:104,sgs:[ads.id]});
-    tryIt('uit-api hands a case to the adapter',tt('node:'+a1.id,'node:'+ad.id,8080));
-    mark('Connect the client network over VPN','A Site-to-Site VPN is an encrypted tunnel between a network outside AWS and a virtual private gateway on your VPC.','The adapter writes to the client’s Argus Safety database on port 1521 through the tunnel. The route tables now send 192.168.0.0/16 to the VPN gateway, and the client side can’t open connections back in, because adapter-sg doesn’t allow it.');
-    mkOnprem(40,680);D.onprem.name='Client network';D.onprem.hostName='Argus Safety DB';
-    mkVpn(v,null);
-    tryIt('The adapter writes to Argus Safety',tt('node:'+ad.id,'onprem',1521));
-    tryIt('The client side tries to reach the adapter',tt('onprem','node:'+ad.id,8080));
-    mark('Lock in the expected behaviour',LOCK,'Fifteen checks: the website and API work through CloudFront, nothing inside the VPC is reachable from the internet, every service reaches what it needs, and the adapter reaches Argus.');
-    const n=x=>'node:'+x.id;
-    D.tests=[ex(tt('internet','cdn:ui',443),true),ex(tt('internet','cdn:api',443),true),ex(tt('internet',n(a1),8080),false),ex(tt('internet',n(pg),5432),false),ex(tt('internet','svc:s3',443),false),
-      ex(tt(n(a1),n(pg),5432),true),ex(tt(n(a1),n(rc),6379),true),ex(tt(n(a2),'svc:sqs',443),true),ex(tt(n(a1),'svc:s3',443),true),ex(tt(n(a1),'svc:ses',587),true),ex(tt(n(a1),'ext:'+fb.id,443),true),
-      ex(tt(n(fn),'svc:bedrock',443),true),ex(tt(n(fn),n(pg),5432),true),ex(tt(n(a1),n(ad),8080),true),ex(tt(n(ad),'onprem',1521),true)];
   },
   micro(){
     D.ext={x:750,y:44};D.svc=svcCol(1410,234,100);
@@ -2856,6 +2992,384 @@ function recordTpl(k){
   REC=null;D=keep;return{steps,fin};
 }
 
+
+/* ---------- service lessons (Learn module) ---------- */
+const BASEW='A VPC with an internet gateway, a public subnet whose route table sends 0.0.0.0/0 to the gateway, and a private subnet with no such route. The networking basics lessons build each of these.';
+function lnet(o){
+  o=o||{};
+  D.svc=svcCol(1250,210,92);
+  const v=mkVpc({name:o.name||'lesson-vpc',cidr:'10.0.0.0/16',x:300,y:170,w:780,h:420});
+  mkIgw(v);
+  const pub=mkSubnet({vpc:v.id,name:'public-a',kind:'public',az:AZS[0],cidr:'10.0.1.0/24',x:22,y:52,w:340,h:250,igw:true});
+  const prv=mkSubnet({vpc:v.id,name:'private-a',kind:'private',az:AZS[0],cidr:'10.0.2.0/24',x:386,y:52,w:372,h:250});
+  let nat=null;
+  if(o.nat){nat=mkNode({type:'nat',subnet:pub.id,name:'nat-a',x:290,y:124,pub:true});RT(prv.rt).routes.push({dest:'0.0.0.0/0',target:nat.id});}
+  return{v,pub,prv,nat};
+}
+const nd=x=>'node:'+x.id;
+const LES={
+  sg(){
+    mark('Start from a basic network',BASEW,'Security groups protect individual servers, so this lesson starts with the network already in place, including a NAT gateway for the private side.');
+    const {v,pub,prv}=lnet({nat:true});
+    mark('Launch a web server with a security group','A security group is a firewall on a server’s network interface. It holds only allow rules: anything not allowed is dropped.','web-sg allows HTTP (80) and HTTPS (443) from anywhere. Every other port on web-1 is closed, so SSH from the internet is refused at the server. Watch the Checks column in Packet flow: it lists web-sg’s allow rules and marks the one that lets the packet in.');
+    const web=mkSg(v,'web-sg','web');
+    const w1=mkNode({type:'ec2',subnet:pub.id,name:'web-1',x:90,y:124,pub:true,sgs:[web.id]});
+    tryIt('A visitor opens the website',tt('internet',nd(w1),443));
+    tryIt('A stranger tries SSH on web-1',tt('internet',nd(w1),22));
+    mark('Allow one group from another','A rule’s source can be another security group instead of an address. It then means “any server in that group”, whatever its address.','app-sg allows port 8080 only from web-sg. Add more web servers and they can all reach app-1 with no rule changes, while nothing else can.');
+    const app=mkSg(v,'app-sg','empty');app.inb.push({proto:'tcp',ports:'8080',peer:web.id});
+    const a1=mkNode({type:'ec2',subnet:prv.id,name:'app-1',x:120,y:124,sgs:[app.id]});
+    tryIt('web-1 calls app-1',tt(nd(w1),nd(a1),8080));
+    tryIt('web-1 tries another port on app-1',tt(nd(w1),nd(a1),22));
+    mark('Replies come back on their own','Security groups are stateful: they remember each connection, so the reply to an allowed request always gets back without a rule of its own.','app-sg has no inbound rule for replies, yet when app-1 downloads an update through nat-a, the answer returns. In the Checks column, the reply passes app-sg as a tracked connection, without matching any rule.');
+    tryIt('app-1 downloads an update',tt(nd(a1),'internet',443));
+    mark('Allow SSH for one address only','A source of /32 means exactly one address. That is how you let a single administrator in.','web-sg now allows SSH (22) only from 198.51.100.7. The same request from any other address is still refused.');
+    web.inb.push({proto:'tcp',ports:'22',peer:'198.51.100.7/32'});
+    tryIt('The admin connects from 198.51.100.7',tt('internet',nd(w1),22));
+    tryIt('Someone tries from 198.51.100.9',tt('internet',nd(w1),22,{srcIp:'198.51.100.9'}));
+  },
+  nacl(){
+    mark('Start with a public web server',BASEW,'Network ACLs guard whole subnets, so this lesson starts with web-1 already running in public-a behind its security group.');
+    const {v,pub}=lnet();
+    const web=mkSg(v,'web-sg','web');
+    const w1=mkNode({type:'ec2',subnet:pub.id,name:'web-1',x:150,y:124,pub:true,sgs:[web.id]});
+    const W=nd(w1);
+    tryIt('A visitor opens the website',tt('internet',W,443));
+    mark('Give the subnet its own network ACL','A network ACL is a firewall at the edge of a subnet. Its rules are numbered and checked from the lowest number up; the first match decides, and anything that matches no rule is denied.','web-acl replaces the default ACL on public-a. Rule 100 allows everything in and out, so nothing changes yet. Send a packet and watch the Checks column as it enters and leaves the subnet.');
+    const acl={id:nid('acl'),vpc:v.id,name:'web-acl',def:false,rules:[{n:100,dir:'in',action:'allow',proto:'all',ports:'',cidr:'0.0.0.0/0'},{n:100,dir:'out',action:'allow',proto:'all',ports:'',cidr:'0.0.0.0/0'}]};
+    D.nacls.push(acl);pub.nacl=acl.id;
+    tryIt('A visitor opens the website',tt('internet',W,443));
+    mark('Block one address','A deny rule with a lower number is checked before the allow rules, so it wins.','Rule 90 denies everything from 198.51.100.66, an address that has been attacking the site. Rule 100 still allows everyone else.');
+    acl.rules.push({n:90,dir:'in',action:'deny',proto:'all',ports:'',cidr:'198.51.100.66/32'});
+    tryIt('The attacker tries the website',tt('internet',W,443,{srcIp:'198.51.100.66'}));
+    tryIt('A normal visitor opens the website',tt('internet',W,443));
+    mark('Replies need a rule too','Network ACLs are stateless: they don’t remember connections, so a reply is checked again, as a separate packet, on its way out.','The outbound rule now allows only TCP 443. The request gets in, but the reply goes back to the visitor’s temporary port, 49152, so it is dropped on the way out.');
+    const out=acl.rules.find(r=>r.dir==='out');out.proto='tcp';out.ports='443';
+    tryIt('A visitor opens the website',tt('internet',W,443));
+    mark('Allow the temporary ports','Clients send from a temporary port between 1024 and 65535, so outbound rules for replies usually allow that whole range.','The outbound rule now allows TCP 1024-65535. Replies leave again, and the site works.');
+    out.ports='1024-65535';
+    tryIt('A visitor opens the website',tt('internet',W,443));
+  },
+  alb(){
+    D.svc=svcCol(1250,200,96);
+    mark('Start with two zones','Each subnet lives in one Availability Zone, a separate data centre in the Region. A load balancer needs subnets in at least two.','app-vpc has a public and a private subnet in us-east-1a and in us-east-1b, so the app can survive losing a zone.');
+    const v=mkVpc({name:'app-vpc',cidr:'10.0.0.0/16',x:330,y:160,w:740,h:566});
+    mkIgw(v);
+    const pa=mkSubnet({vpc:v.id,name:'public-a',kind:'public',az:AZS[0],cidr:'10.0.1.0/24',x:22,y:52,w:336,h:216,igw:true});
+    mkSubnet({vpc:v.id,name:'public-b',kind:'public',az:AZS[1],cidr:'10.0.2.0/24',x:382,y:52,w:336,h:216});
+    const ra=mkSubnet({vpc:v.id,name:'private-a',kind:'private',az:AZS[0],cidr:'10.0.11.0/24',x:22,y:288,w:336,h:216});
+    const rb=mkSubnet({vpc:v.id,name:'private-b',kind:'private',az:AZS[1],cidr:'10.0.12.0/24',x:382,y:288,w:336,h:216});
+    mark('Run the app in both zones','Two EC2 instances running the same code, one per zone, with private addresses only.','app-sg starts with no inbound rules, so nothing can reach app-a or app-b yet.');
+    const app=mkSg(v,'app-sg','empty');
+    const a1=mkNode({type:'ec2',subnet:ra.id,name:'app-a',x:90,y:120,sgs:[app.id]});
+    const a2=mkNode({type:'ec2',subnet:rb.id,name:'app-b',x:168,y:120,sgs:[app.id]});
+    mark('Add an internet-facing load balancer','An Application Load Balancer takes connections on one public address and passes each one to a target, opening a new connection from its own private address.','web-lb listens on HTTPS and forwards to app-a on 8080. Because the load balancer opens the second connection itself, app-sg only needs to allow lb-sg.');
+    const lbsg=mkSg(v,'lb-sg','web');app.inb.push({proto:'tcp',ports:'8080',peer:lbsg.id});
+    const lb=mkNode({type:'alb',subnet:pa.id,name:'web-lb',x:168,y:118,pub:true,sgs:[lbsg.id],scheme:'internet',port:443,target:a1.id,tport:8080});
+    tryIt('A visitor opens the website',tt('internet',nd(lb),443));
+    tryIt('A stranger tries app-a directly',tt('internet',nd(a1),8080));
+    mark('See the two connections','A load balancer never forwards the visitor’s packet as it is. It ends that connection and starts its own.','Send the request again and watch Packet flow: halfway through, the source changes from the visitor’s address to web-lb’s private address. app-a only ever sees the load balancer.');
+    tryIt('A visitor opens the website',tt('internet',nd(lb),443));
+    mark('Add an internal load balancer','An internal load balancer has only a private address, for traffic between tiers inside your network.','api-lb lets other services in the VPC call the app. It gets no public IP, so the internet can’t even address it.');
+    const ilb=mkSg(v,'api-lb-sg','empty');ilb.inb.push({proto:'tcp',ports:'80',peer:v.cidr});app.inb.push({proto:'tcp',ports:'8080',peer:ilb.id});
+    const lb2=mkNode({type:'alb',subnet:ra.id,name:'api-lb',x:240,y:120,sgs:[ilb.id],scheme:'internal',port:80,target:a1.id,tport:8080});
+    tryIt('app-b calls api-lb',tt(nd(a2),nd(lb2),80));
+    tryIt('A stranger tries api-lb',tt('internet',nd(lb2),80));
+  },
+  data(){
+    mark('Start with an app server',BASEW,'app-1 runs in private-a. Its data will live in the same private subnet.');
+    const {v,prv}=lnet();
+    const app=mkSg(v,'app-sg','app');
+    const a1=mkNode({type:'ec2',subnet:prv.id,name:'app-1',x:70,y:124,sgs:[app.id]});
+    mark('Add an RDS database','RDS runs a managed database inside your VPC. It gets a private address and a security group, like a server.','orders-db runs PostgreSQL on port 5432. db-sg only admits app-sg, so only the app server can connect. A connection to any other port, such as MySQL’s 3306, is refused by db-sg before it reaches the database.');
+    const db=mkSg(v,'db-sg','empty');db.inb.push({proto:'tcp',ports:'5432',peer:app.id});
+    const d1=mkNode({type:'rds',subnet:prv.id,name:'orders-db',x:190,y:124,sgs:[db.id],engine:'postgres',port:5432});
+    tryIt('app-1 queries orders-db',tt(nd(a1),nd(d1),5432));
+    tryIt('app-1 tries the MySQL port',tt(nd(a1),nd(d1),3306));
+    mark('Add a Redis cache','ElastiCache Redis keeps frequently used data in memory, inside your VPC, on port 6379.','app-cache saves the app from querying PostgreSQL for every request. redis-sg admits only app-sg.');
+    const rc=mkSg(v,'redis-sg','empty');rc.inb.push({proto:'tcp',ports:'6379',peer:app.id});
+    const r1=mkNode({type:'redis',subnet:prv.id,name:'app-cache',x:300,y:124,sgs:[rc.id]});
+    tryIt('app-1 reads from app-cache',tt(nd(a1),nd(r1),6379));
+    mark('Keep the data tier private','A database should never have a public address. Reach it from your own servers, or over a VPN.','Neither orders-db nor app-cache has a public address, and nothing routes from the internet into private-a, so a stranger can’t even address them.');
+    tryIt('A stranger tries orders-db',tt('internet',nd(d1),5432));
+  },
+  compute(){
+    mark('Start from a basic network',BASEW,'Containers and functions run inside subnets just as servers do. A NAT gateway gives the private side a way out.');
+    const {v,pub,prv}=lnet({nat:true});
+    mark('Run microservices on EKS','EKS runs containers in pods. With the VPC CNI each pod gets a private address from its subnet, so routes, network ACLs and security groups apply to it as they do to a server.','orders-svc and users-svc are two microservices in private-a. svc-sg lets them call each other on port 8080.');
+    const svc=mkSg(v,'svc-sg','empty');svc.inb.push({proto:'tcp',ports:'8080',peer:svc.id});
+    const o1=mkNode({type:'eks',subnet:prv.id,name:'orders-svc',x:70,y:124,sgs:[svc.id]});
+    const u1=mkNode({type:'eks',subnet:prv.id,name:'users-svc',x:180,y:124,sgs:[svc.id]});
+    tryIt('orders-svc calls users-svc',tt(nd(o1),nd(u1),8080));
+    mark('Expose a service through a load balancer','Pods aren’t reached from the internet directly. A load balancer in a public subnet forwards to them.','web-lb takes HTTPS and sends it to orders-svc on 8080. svc-sg now also admits lb-sg.');
+    const lbsg=mkSg(v,'lb-sg','web');svc.inb.push({proto:'tcp',ports:'8080',peer:lbsg.id});
+    const lb=mkNode({type:'alb',subnet:pub.id,name:'web-lb',x:110,y:124,pub:true,sgs:[lbsg.id],scheme:'internet',port:443,target:o1.id,tport:8080});
+    tryIt('A visitor calls the service',tt('internet',nd(lb),443));
+    mark('Attach a Lambda function to the VPC','A VPC-attached Lambda function gets a network interface with a private address in your subnet. It never gets a public IP.','report-fn reads from orders-svc, so svc-sg now admits fn-sg. fn-sg needs no inbound rules: the function only starts connections.');
+    const fn=mkSg(v,'fn-sg','empty');svc.inb.push({proto:'tcp',ports:'8080',peer:fn.id});
+    const f1=mkNode({type:'lambda',subnet:prv.id,name:'report-fn',x:290,y:124,sgs:[fn.id]});
+    tryIt('report-fn calls orders-svc',tt(nd(f1),nd(o1),8080));
+    mark('Reach the internet through NAT','Without a public IP, a function or pod reaches the internet only through a NAT gateway or, for AWS services, a VPC endpoint.','report-fn calls an outside API through nat-a. The API sees nat-a’s Elastic IP, never the function’s own address.');
+    tryIt('report-fn calls an outside API',tt(nd(f1),'internet',443));
+  },
+  endpoints(){
+    mark('Start with a private app server',BASEW,'app-1 runs in private-a, and nat-a gives it a way out to the internet.');
+    const {v,prv}=lnet({nat:true});
+    const app=mkSg(v,'app-sg','app');
+    const a1=mkNode({type:'ec2',subnet:prv.id,name:'app-1',x:70,y:124,sgs:[app.id]});
+    const A=nd(a1);
+    mark('Reach S3 the default way','S3 lives outside your VPC. Without an endpoint, a private server reaches S3’s public address through the NAT gateway.','app-1 can save files to S3 through nat-a, but every gigabyte pays NAT processing charges. Watch the route lookup card: 0.0.0.0/0 is the only route that matches.');
+    tryIt('app-1 saves a file to S3',tt(A,'svc:s3',443));
+    mark('Add gateway endpoints','A gateway endpoint adds a route whose destination is the service’s address range, a prefix list, pointing straight at the endpoint. It is free, and exists for S3 and DynamoDB.','private-rt now has routes for pl-s3 and pl-dynamodb. They are more specific than 0.0.0.0/0, so S3 and DynamoDB traffic takes the endpoints while everything else still uses nat-a.');
+    mkGwe(v,'s3',[prv.rt]);mkGwe(v,'dynamodb',[prv.rt]);
+    tryIt('app-1 saves a file to S3',tt(A,'svc:s3',443));
+    tryIt('app-1 reads from DynamoDB',tt(A,'svc:dynamodb',443));
+    mark('Add an interface endpoint','An interface endpoint puts a private IP for a service inside your subnet. Inside the VPC, the service’s name resolves to that address.','sqs-endpoint gives app-1 a private path to SQS. endpoint-sg must allow HTTPS from app-sg.');
+    const ep=mkSg(v,'endpoint-sg','empty');ep.inb.push({proto:'tcp',ports:'443',peer:app.id});
+    mkNode({type:'vpce',subnet:prv.id,name:'sqs-endpoint',service:'sqs',x:200,y:124,sgs:[ep.id]});
+    tryIt('app-1 sends a message to SQS',tt(A,'svc:sqs',443));
+    mark('Keep the bucket private','A bucket stays private through permissions: Block Public Access, IAM and the bucket policy. The network path alone doesn’t protect it.','Block Public Access is on, so an anonymous request from the internet reaches S3 and gets 403 Access Denied.');
+    tryIt('Anyone on the internet tries the bucket',tt('internet','svc:s3',443));
+    mark('Accept requests only through the endpoint','A bucket policy can deny any request that didn’t arrive through your VPC endpoint, using the aws:sourceVpce condition.','Now even someone holding valid, stolen keys is refused from the internet, while app-1 still works through the endpoint.');
+    D.s3={bpa:true,pub:false,restrict:'vpce',ips:''};
+    tryIt('Stolen keys used from the internet',tt('internet','svc:s3',443,{signed:true}));
+    tryIt('app-1 saves a file to S3',tt(A,'svc:s3',443));
+  },
+  apigw(){
+    mark('Start with a private app behind an internal load balancer',BASEW,'app-1 and the internal load balancer api-lb live in private-a. Nothing here has a public address.');
+    const {v,prv}=lnet({nat:true});
+    const app=mkSg(v,'app-sg','empty'),ilb=mkSg(v,'api-lb-sg','empty');app.inb.push({proto:'tcp',ports:'8080',peer:ilb.id});
+    const a1=mkNode({type:'ec2',subnet:prv.id,name:'app-1',x:60,y:124,sgs:[app.id]});
+    const lb2=mkNode({type:'alb',subnet:prv.id,name:'api-lb',x:145,y:124,sgs:[ilb.id],scheme:'internal',port:80,target:a1.id,tport:8080});
+    mark('Create a public API with a VPC link','API Gateway is a managed HTTPS front door that lives outside your VPC, with throttling, API keys and authorisation built in.','orders-api is public, but no server is. It reaches api-lb through a VPC link: a network interface placed in private-a. vpclink-sg is allowed through api-lb-sg on port 80.');
+    D.api={x:200,y:700,name:'orders-api',type:'regional',target:lb2.id,link:''};
+    const g=apiLink();allowLink(g);const lk=N(D.api.link);if(lk){lk.x=230;lk.y=124;}
+    tryIt('A client calls the API',tt('internet','svc:apigw',443));
+    mark('Invoke a Lambda function instead','API Gateway can also call a Lambda function directly, through the Lambda service. That call never enters your VPC, so no VPC link is needed.','orders-api now invokes quote-fn. The VPC link is removed, and the request no longer passes through any route table or firewall in the VPC.');
+    const fn=mkSg(v,'fn-sg','empty');
+    const f1=mkNode({type:'lambda',subnet:prv.id,name:'quote-fn',x:230,y:124,sgs:[fn.id]});
+    D.api.target=f1.id;apiLink();
+    tryIt('A client calls the API',tt('internet','svc:apigw',443));
+    mark('Make the API private','A private API has no public address. It can only be called from inside a VPC that has an interface endpoint for API Gateway.','orders-api is now private, so calls from the internet fail. app-1 can still call it through api-endpoint in private-a.');
+    D.api.type='private';
+    const ep=mkSg(v,'endpoint-sg','empty');ep.inb.push({proto:'tcp',ports:'443',peer:v.cidr});
+    mkNode({type:'vpce',subnet:prv.id,name:'api-endpoint',service:'apigw',x:315,y:124,sgs:[ep.id]});
+    tryIt('A client on the internet calls the API',tt('internet','svc:apigw',443));
+    tryIt('app-1 calls the API',tt(nd(a1),'svc:apigw',443));
+  },
+  edge(){
+    D.ext={x:200,y:40};
+    mark('Start with a public API',BASEW,'orders-api already serves the app through a VPC link and an internal load balancer, as in the API Gateway lesson.');
+    const {v,prv}=lnet({nat:true});
+    const app=mkSg(v,'app-sg','empty'),ilb=mkSg(v,'api-lb-sg','empty');app.inb.push({proto:'tcp',ports:'8080',peer:ilb.id});
+    const a1=mkNode({type:'ec2',subnet:prv.id,name:'app-1',x:60,y:124,sgs:[app.id]});
+    const lb2=mkNode({type:'alb',subnet:prv.id,name:'api-lb',x:160,y:124,sgs:[ilb.id],scheme:'internal',port:80,target:a1.id,tport:8080});
+    D.api={x:980,y:40,name:'orders-api',type:'regional',target:lb2.id,link:''};
+    const g=apiLink();allowLink(g);const lk=N(D.api.link);if(lk){lk.x=270;lk.y=124;}
+    mark('Put CloudFront in front, with a name and a certificate','CloudFront is AWS’s content delivery network. Route 53 turns your domain into CloudFront’s address, and Certificate Manager supplies the certificate for HTTPS.','Users open app.example.com. CloudFront serves the static pages from a private bucket and passes API calls on to orders-api.');
+    D.cdn={x:760,y:40,name:'app.example.com',dns:true,cert:true,waf:false,block:''};
+    tryIt('A user opens the website',tt('internet','cdn:ui',443));
+    tryIt('The site calls the API',tt('internet','cdn:api',443));
+    mark('See what a missing certificate does','Browsers only trust HTTPS when the server presents a valid certificate for the exact name they asked for.','The certificate is switched off for this step, so the secure connection fails before any page loads. For CloudFront, certificates must be issued in us-east-1.');
+    D.cdn.cert=false;
+    tryIt('A user opens the website',tt('internet','cdn:ui',443));
+    mark('Filter requests with WAF','AWS WAF is a web application firewall. A web ACL on the distribution checks every request before CloudFront answers it.','The certificate is back, and the web ACL blocks 198.51.100.66. Its requests get 403 Forbidden at the edge and never reach API Gateway or your VPC.');
+    D.cdn.cert=true;D.cdn.waf=true;D.cdn.block='198.51.100.66';
+    tryIt('The blocked address tries the site',tt('internet','cdn:ui',443,{srcIp:'198.51.100.66'}));
+    tryIt('A normal user opens the website',tt('internet','cdn:ui',443));
+    mark('See what a missing DNS record does','Without a DNS record nobody can find the site, even though everything behind it still works.','Route 53 no longer has the alias record, so browsers can’t resolve app.example.com.');
+    D.cdn.dns=false;
+    tryIt('A user opens the website',tt('internet','cdn:ui',443));
+  },
+  peering(){
+    D.svc=svcCol(1560,160,92);
+    mark('Start with two VPCs','Two isolated networks whose address ranges don’t overlap, which is required before they can be joined.','prod-vpc (10.0.0.0/16) runs app-1 and shared-vpc (10.1.0.0/16) runs tools-1. Their security groups trust 10.0.0.0/8, but no route links the two VPCs.');
+    const a=mkVpc({name:'prod-vpc',cidr:'10.0.0.0/16',x:300,y:150,w:330,h:330});
+    const b=mkVpc({name:'shared-vpc',cidr:'10.1.0.0/16',x:700,y:150,w:330,h:330});
+    const inside=v=>{const g=mkSg(v,'internal-sg','empty');g.inb.push({proto:'all',ports:'',peer:'10.0.0.0/8'});return g;};
+    const sa=mkSubnet({vpc:a.id,name:'private-a',kind:'private',az:AZS[0],cidr:'10.0.1.0/24',x:22,y:52,w:286,h:210});
+    const sb=mkSubnet({vpc:b.id,name:'private-a',kind:'private',az:AZS[0],cidr:'10.1.1.0/24',x:22,y:52,w:286,h:210});
+    const n1=mkNode({type:'ec2',subnet:sa.id,name:'app-1',x:143,y:124,sgs:[inside(a).id]});
+    const n2=mkNode({type:'ec2',subnet:sb.id,name:'tools-1',x:143,y:124,sgs:[inside(b).id]});
+    tryIt('app-1 tries to reach tools-1',tt(nd(n1),nd(n2),443));
+    mark('Create a peering connection','VPC peering joins exactly two VPCs over the AWS network.','The peering connection now exists, but no route points to it yet, so traffic from app-1 still has nowhere to go.');
+    const x=mkPcx(a.id,b.id,false);
+    tryIt('app-1 tries to reach tools-1',tt(nd(n1),nd(n2),443));
+    mark('Add a route on one side','Each VPC’s route tables decide where its own traffic goes, so routes are needed on both sides.','prod-vpc now sends 10.1.0.0/16 to the peering connection. The request reaches tools-1, but shared-vpc has no route back, so the reply is lost.');
+    addRouteAll(a.id,b.cidr,x.id);
+    tryIt('app-1 tries to reach tools-1',tt(nd(n1),nd(n2),443));
+    mark('Add the route back','With a route on each side, traffic flows both ways.','shared-vpc now sends 10.0.0.0/16 to the same peering connection, and app-1 reaches tools-1.');
+    addRouteAll(b.id,a.cidr,x.id);
+    tryIt('app-1 reaches tools-1',tt(nd(n1),nd(n2),443));
+    mark('Peering doesn’t pass traffic on','Peering isn’t transitive: a VPC can’t reach a third network through its peer. A transit gateway solves that.','data-vpc is peered with shared-vpc only. Even with a route in prod-vpc pointing at its existing peering connection, app-1 can’t reach db-1, because that connection only leads to shared-vpc.');
+    const c=mkVpc({name:'data-vpc',cidr:'10.2.0.0/16',x:1100,y:150,w:330,h:330});
+    const sc=mkSubnet({vpc:c.id,name:'private-a',kind:'private',az:AZS[0],cidr:'10.2.1.0/24',x:22,y:52,w:286,h:210});
+    const n3=mkNode({type:'ec2',subnet:sc.id,name:'db-1',x:143,y:124,sgs:[inside(c).id]});
+    mkPcx(b.id,c.id,true);addRouteAll(a.id,c.cidr,x.id);
+    tryIt('app-1 tries to reach db-1',tt(nd(n1),nd(n3),443));
+  },
+  tgw(){
+    D.svc=svcCol(1560,150,92);
+    mark('Start with two VPCs','Two isolated networks with non-overlapping ranges, and no route to any other network.','app-1 and tools-1 each use internal-sg, which trusts 10.0.0.0/8 and allows SSH from the office range, 192.168.0.0/16. They still can’t reach each other.');
+    const a=mkVpc({name:'prod-vpc',cidr:'10.0.0.0/16',x:300,y:150,w:330,h:350});
+    const b=mkVpc({name:'shared-vpc',cidr:'10.1.0.0/16',x:690,y:150,w:330,h:350});
+    const inside=v=>{const g=mkSg(v,'internal-sg','empty');g.inb.push({proto:'all',ports:'',peer:'10.0.0.0/8'},{proto:'tcp',ports:'22',peer:'192.168.0.0/16'});return g;};
+    const sa=mkSubnet({vpc:a.id,name:'private-a',kind:'private',az:AZS[0],cidr:'10.0.1.0/24',x:22,y:52,w:286,h:210});
+    const sb=mkSubnet({vpc:b.id,name:'private-a',kind:'private',az:AZS[0],cidr:'10.1.1.0/24',x:22,y:52,w:286,h:210});
+    const n1=mkNode({type:'ec2',subnet:sa.id,name:'app-1',x:143,y:124,sgs:[inside(a).id]});
+    const n2=mkNode({type:'ec2',subnet:sb.id,name:'tools-1',x:143,y:124,sgs:[inside(b).id]});
+    tryIt('app-1 tries to reach tools-1',tt(nd(n1),nd(n2),443));
+    mark('Connect them with a transit gateway','A transit gateway is a regional router. Every VPC or VPN attached to it can reach the others, as long as their own route tables point to it.','Both VPCs are attached to hub, and each route table now sends the other VPC’s range there. Watch the route lookup card pick the transit gateway.');
+    const t=mkTgw({name:'hub',x:660,y:620,atts:[a.id,b.id],routes:true});
+    tryIt('app-1 reaches tools-1',tt(nd(n1),nd(n2),443));
+    mark('Link the office over VPN','A Site-to-Site VPN is an encrypted tunnel over the internet between your own network and AWS. Here it ends on the transit gateway.','Staff at the office reach both VPCs through one tunnel. Every route table now sends 192.168.0.0/16 to hub.');
+    mkOnprem(300,580);t.vpn=true;tgwRoutes(t);
+    tryIt('Office SSH to app-1',tt('onprem',nd(n1),22));
+    tryIt('Office tries HTTPS on tools-1',tt('onprem',nd(n2),443));
+    mark('Add networks without adding links','Each new VPC needs one attachment to the transit gateway, rather than a peering connection to every existing VPC.','data-vpc is attached to hub, and every route table now sends its range there. app-1 reaches db-1 straight away, which peering alone couldn’t do.');
+    const c=mkVpc({name:'data-vpc',cidr:'10.2.0.0/16',x:1080,y:150,w:330,h:350});
+    const sc=mkSubnet({vpc:c.id,name:'private-a',kind:'private',az:AZS[0],cidr:'10.2.1.0/24',x:22,y:52,w:286,h:210});
+    const n3=mkNode({type:'ec2',subnet:sc.id,name:'db-1',x:143,y:124,sgs:[inside(c).id]});
+    t.atts.push(c.id);tgwRoutes(t);
+    tryIt('app-1 reaches db-1',tt(nd(n1),nd(n3),443));
+    tryIt('Office SSH to db-1',tt('onprem',nd(n3),22));
+  }
+};
+function recordLes(k){
+  const keep=D;D=blankD();REC=[];LES[k]();
+  const fin=JSON.stringify(D),steps=REC.map((m,i)=>({title:m.title,what:m.what,why:m.why,tries:m.tries,state:i<REC.length-1?REC[i+1].before:fin}));
+  REC=null;D=keep;return{steps,fin};
+}
+let svcMode=false,stash=null;
+const SVCL=()=>window.FTP_SVCL||[];
+const dv=()=>document.body.dataset.view==='design'||svcMode;
+function lessonSync(){
+  if(!svcMode||!tut)return;
+  window.FTP_SVC={k:tut.k,label:tut.name,steps:tut.steps.map(s=>s.title),i:tut.i};
+  if(window.FTP&&window.FTP.renderSteps)window.FTP.renderSteps();
+}
+function startLesson(k){
+  const meta=SVCL().find(x=>x[0]===k);if(!meta||!LES[k])return;
+  if(!svcMode){
+    stash=JSON.stringify(D);svcMode=true;document.body.classList.add('svc-mode');
+    $('#builder').prepend($('#steps'));
+    if(window.FTP&&window.FTP.stop)window.FTP.stop();
+  }
+  stopAnim();disarm();
+  const r=recordLes(k);scratch=false;
+  tut={k,name:meta[1],steps:r.steps,i:0,hl:[],lesson:true};
+  D=norm(JSON.parse(r.fin));fit();fitted=true;
+  goStep(0);
+  if(window.innerWidth<1024)window.scrollTo(0,0);
+}
+function exitLesson(){
+  if(!svcMode)return;
+  svcMode=false;document.body.classList.remove('svc-mode');
+  document.querySelector('main').prepend($('#steps'));
+  stopAnim();tut=null;window.FTP_SVC=null;
+  if(stash){D=norm(JSON.parse(stash));stash=null;}
+  sel=null;last=null;tab='props';fitted=false;draw();renderPanel();
+  if(window.FTP&&window.FTP.renderSteps)window.FTP.renderSteps();
+}
+function nextLesson(){const L=SVCL(),i=L.findIndex(x=>x[0]===(tut&&tut.k));return i>=0&&i<L.length-1?L[i+1]:null;}
+function finishLesson(){
+  window.FTP_SVC_DONE=window.FTP_SVC_DONE||new Set();window.FTP_SVC_DONE.add(tut.k);
+  const nx=nextLesson();
+  if(nx){startLesson(nx[0]);toast('Lesson complete. Next: '+nx[1]+'.');}
+  else{exitLesson();toast('You’ve finished every lesson. Try the Sandbox, or design your own network.');}
+}
+document.addEventListener('click',e=>{if(e.target.closest('#steps [data-act="chapter"],#steps [data-b="svc-lesson"]')){const st=$('#steps');if(st.classList.contains('open')){st.classList.remove('open');if(window.FTP&&window.FTP.renderSteps)window.FTP.renderSteps();}}if(svcMode&&e.target.closest('[data-act="chapter"],[data-act="next"],[data-act="prev"]'))exitLesson();});
+
+/* ---------- route table and firewall check card ---------- */
+function tgtName(t){
+  if(t==='local')return 'local';if(!t)return '(none)';
+  const k=String(t).split('-')[0];
+  if(k==='igw')return 'internet gateway';
+  if(k==='nat'){const n=N(t);return n?'NAT '+n.name:t;}
+  if(k==='vpce'){const e=D.gwes.find(x=>x.id===t);return e?E.SVC[e.service].name+' endpoint':t;}
+  if(k==='pcx')return 'peering '+t;
+  if(k==='tgw'){const g=D.tgws.find(x=>x.id===t);return g?'transit gateway '+g.name:t;}
+  if(k==='vgw')return 'VPN gateway';
+  return t;
+}
+const ruleTxt=r=>r.proto==='all'?'All traffic':r.proto==='icmp'?'ICMP':r.proto.toUpperCase()+' '+(String(r.ports||'').trim()||'all ports');
+const peerTxt=p=>String(p).indexOf('sg-')===0?((SG(p)||{}).name||p):p;
+const CHK0='<div class="chk-h"><b>Checks</b></div><p class="chk-empty">When a packet reaches a route table, network ACL or security group, its rules appear here with the one that decides highlighted.</p>';
+function chkHide(){const c=$('#b-check');if(c){c.hidden=false;c.innerHTML=CHK0;}$$('#bsvg .chk-on').forEach(x=>x.classList.remove('chk-on'));}
+function checkDetail(s){
+  const t=s.ref.t,p=s.pkt;
+  const pk=`<div class="chk-p"><span>${s.dir==='rep'?'Reply':'Request'}</span><b>${p.src} → ${p.dst}</b><i>${p.proto==='icmp'?'ICMP':p.proto.toUpperCase()+' port '+p.dport}</i></div>`;
+  let h='',note='',ok=s.v!=='deny',el='';
+  if(t==='rt'){
+    const rt=RT(s.ref.id);if(!rt)return null;
+    const sn=S(s.at.slice(3)),v=V(sn?sn.vpc:rt.vpc);if(!v)return null;
+    const best=E.routeLookup(D,rt,v,p.dst);
+    const len=r=>{if(String(r.dest).indexOf('pl-')===0){const sv=Object.values(E.SVC).find(x=>x.pl===r.dest);const c=sv&&sv.cidrs.map(E.cidr).find(c=>E.inC(p.dst,c));return c?c.len:null;}const c=E.cidr(r.dest);return c&&E.inC(p.dst,c)?c.len:null;};
+    const rows=[{dest:v.cidr,target:'local',i:-1}].concat(rt.routes.map((r,i)=>({dest:r.dest,target:r.target,i})));
+    h=`<div class="chk-h"><b>Route lookup</b><span>${esc(rt.name)}${sn?' · '+esc(sn.name):''}</span></div>${pk}<table><thead><tr><th>Destination</th><th>Target</th><th>Match</th></tr></thead><tbody>`+
+      rows.map((r,j)=>{const m=len(r),win=!!best&&best.i===r.i&&best.route.dest===r.dest,bh=win&&r.target!=='local'&&!E.targetExists(D,rt,r.target);
+        return `<tr class="${win?(bh?'bad':'win'):m!=null?'cand':'miss'}" style="animation-delay:${j*.16}s"><td>${esc(r.dest)}</td><td>${esc(tgtName(r.target))}</td><td>${win?(bh?'✕ blackhole':'✓ /'+m+' wins'):m!=null?'/'+m+' matches':'no'}</td></tr>`;}).join('')+'</tbody></table>';
+    const nm=rows.filter(r=>len(r)!=null).length;
+    note=!best?'No route covers '+p.dst+', so the router drops the packet.':(!ok?'The best match points to a target that no longer exists. That is a blackhole route.':(nm>1?nm+' routes cover '+p.dst+'. The longest prefix, the most specific one, wins.':'One route covers '+p.dst+'. The packet goes to '+tgtName(best.route.target)+'.'));
+    el='rt:'+rt.id;
+  }else if(t==='nacl'){
+    const a=ACL(s.ref.id);if(!a)return null;
+    const dirn=s.ref.dirn,ip=dirn==='in'?p.src:p.dst;
+    const rules=a.rules.filter(r=>r.dir===dirn).sort((x,y)=>x.n-y.n);
+    let hit=-1;rules.forEach((r,j)=>{if(hit<0&&E.protoOk(r.proto,p.proto)&&E.portOk(r,p.proto,p.dport)&&E.inC(ip,r.cidr))hit=j;});
+    h=`<div class="chk-h"><b>Network ACL · ${dirn==='in'?'inbound':'outbound'}</b><span>${esc(a.name)}</span></div>${pk}<table><thead><tr><th>Rule</th><th>${dirn==='in'?'Source':'Destination'}</th><th>Traffic</th><th>Action</th></tr></thead><tbody>`+
+      rules.map((r,j)=>`<tr class="${j===hit?(r.action==='allow'?'win':'bad'):hit>=0&&j>hit?'skip':'miss'}" style="animation-delay:${j*.2}s"><td>${r.n}</td><td>${esc(r.cidr)}</td><td>${esc(ruleTxt(r))}</td><td>${r.action}</td></tr>`).join('')+
+      `<tr class="${hit<0?'bad':'skip'}" style="animation-delay:${rules.length*.2}s"><td>*</td><td>0.0.0.0/0</td><td>All traffic</td><td>deny</td></tr></tbody></table>`;
+    note=hit<0?'No numbered rule matches, so the final * rule denies it.':'Rule '+rules[hit].n+' is the first match, so it decides: '+rules[hit].action+'. Rules after it are never checked.';
+    if(s.dir==='rep')note+=' Network ACLs are stateless, so the reply is checked as a separate packet.';
+    el='nacl:'+a.id;
+  }else if(t==='sg'){
+    const n=N(s.ref.node);if(!n)return null;
+    const dirn=s.ref.dirn,peer=dirn==='inb'?p.src:p.dst;
+    const match=r=>E.protoOk(r.proto,p.proto)&&E.portOk(r,p.proto,p.dport)&&(String(r.peer).indexOf('sg-')===0?D.nodes.some(x=>x.ip===peer&&(x.sgs||[]).indexOf(r.peer)>=0):E.inC(peer,r.peer));
+    const groups=(n.sgs||[]).map(SG).filter(Boolean);let won=false,j=0;
+    h=`<div class="chk-h"><b>Security group · ${dirn==='inb'?'inbound':'outbound'} allow list</b><span>${esc(n.name)}</span></div>${pk}<table><thead><tr><th>Allowed traffic</th><th>${dirn==='inb'?'From':'To'}</th><th>Result</th></tr></thead><tbody>`;
+    const st=!!s.ref.stateful;
+    groups.forEach(g=>{
+      h+=`<tr class="grp" style="animation-delay:${(j++)*.16}s"><td colspan="3">${esc(g.name)}</td></tr>`;
+      if(!g[dirn].length)h+=`<tr class="miss" style="animation-delay:${(j++)*.16}s"><td colspan="3">No ${dirn==='inb'?'inbound':'outbound'} rules</td></tr>`;
+      g[dirn].forEach(r=>{const m=!st&&match(r),win=m&&!won;if(win)won=true;h+=`<tr class="${win?'win':m?'cand':'miss'}" style="animation-delay:${(j++)*.16}s"><td>${esc(ruleTxt(r))}</td><td>${esc(peerTxt(r.peer))}</td><td>${win?'✓ allows it':m?'also matches':'no'}</td></tr>`;});
+    });
+    if(!groups.length)h+='<tr class="bad"><td colspan="3">No security group attached</td></tr>';
+    h+='</tbody></table>';
+    if(st)h=h.replace(/<\/tbody><\/table>$/,'<tr class="win"><td colspan="3">✓ Tracked connection: reply to an allowed request</td></tr></tbody></table>');
+    note=st?'Security groups are stateful. This reply belongs to a connection that was already allowed, so no rule needs to match.':won?'A rule on the allow list matches, so the packet goes through. Security groups only contain allow rules.':'Nothing on the allow list matches, so the packet is dropped. Anything a security group doesn’t allow is denied.';
+    el=groups.length?'sg:'+groups[0].id:'';
+  }
+  return{h:h+`<div class="chk-v ${ok?'ok':'no'}">${ok?'✓':'✕'} ${esc(note)}</div>`,el};
+}
+const isChk=s=>!!s&&!!s.ref&&['route','nacl','sg'].indexOf(s.kind)>=0;
+function chkLabel(s){
+  const t=s.ref.t;
+  if(t==='rt'){const rt=RT(s.ref.id);return['Route table',rt?rt.name:''];}
+  if(t==='nacl'){const a=ACL(s.ref.id);return['Network ACL '+(s.ref.dirn==='in'?'in':'out'),a?a.name:''];}
+  const n=N(s.ref.node),g=SG(s.ref.id);return['Security group '+(s.ref.dirn==='inb'?'in':'out'),(g?g.name:'none')+(n?' on '+n.name:'')];
+}
+function showCheck(s,idx,open){
+  chkHide();
+  const box=$('#b-check');if(!box||!last)return;
+  const steps=last.res.steps;
+  if(idx==null)idx=steps.indexOf(s);
+  const upto=Math.max(idx,0),list=[];
+  for(let k=0;k<=upto&&k<steps.length;k++)if(isChk(steps[k]))list.push(k);
+  if(!list.length)return;
+  let cur=open!=null?open:isChk(steps[upto])?upto:list[list.length-1];
+  let h=`<div class="chk-h"><b>Checks on this path</b><span>${list.length} so far</span></div><div class="chk-list">`,el='';
+  list.forEach(k=>{
+    const st=steps[k],L=chkLabel(st),o=k===cur;
+    h+=`<button class="chk-item ${st.v==='deny'?'no':'ok'}${o?' open':''}${st.dir==='rep'?' rep':''}" data-b="chk-open" data-i="${k}" aria-expanded="${o}"><i>${st.v==='deny'?'✕':'✓'}</i><b>${esc(L[0])}</b><span>${esc(L[1])}</span><em>${st.dir==='rep'?'reply':'request'}</em></button>`;
+    if(o){const d=checkDetail(st);if(d){h+=`<div class="chk-d">${d.h}</div>`;el=d.el;}}
+  });
+  box.innerHTML=h+'</div>';
+  const od=box.querySelector('.chk-item.open');if(od)box.scrollTop=Math.max(0,od.offsetTop-box.offsetTop-40);
+  if(el)$$('#bsvg [data-el="'+el+'"]').forEach(x=>x.classList.add('chk-on'));
+}
+
 /* ---------- geometry ---------- */
 const svg=$('#bsvg');
 const absSn=s=>{const v=V(s.vpc);return{x:v.x+s.x,y:v.y+s.y,w:s.w,h:s.h};};
@@ -2939,7 +3453,7 @@ function setView(){const r=svg.getBoundingClientRect();if(r.width&&r.height)view
 function fit(){
   let x0=1e9,y0=1e9,x1=-1e9,y1=-1e9;
   const inc=(x,y,w,h)=>{[[x,y],[x+w,y],[x,y+h],[x+w,y+h]].forEach(([a,b])=>{const q=P({x:a,y:b});x0=Math.min(x0,q.x);y0=Math.min(y0,q.y-40);x1=Math.max(x1,q.x);y1=Math.max(y1,q.y+30);});};
-  inc(D.ext.x-50,D.ext.y-60,100,110);Object.values(D.svc).forEach(p=>inc(p.x-76,p.y-64,152,148));
+  inc(D.ext.x-50,D.ext.y-60,100,110);if(!svcMode||(tut&&tut.k==='endpoints'))Object.values(D.svc).forEach(p=>inc(p.x-76,p.y-64,152,148));
   D.vpcs.forEach(v=>inc(v.x-20,v.y-50,v.w+40,v.h+70));D.gwes.forEach(e=>{const p=pos('gwe:'+e.id);if(p)inc(p.x,p.y-20,150,40);});if(D.onprem)inc(D.onprem.x,D.onprem.y,190,140);D.tgws.forEach(t=>inc(t.x-60,t.y-30,120,100));if(D.api)inc(D.api.x-70,D.api.y-30,140,100);if(D.cdn)inc(D.cdn.x-310,D.cdn.y-170,390,250);D.exts.forEach(x=>inc(x.x-70,x.y-30,140,100));
   if(!D.vpcs.length)inc(300,150,620,420);
   x0-=30;y0-=20;x1+=30;y1+=30;
@@ -2953,7 +3467,7 @@ function toWorld(e){return PI(toSvg(e));}
 function toSvg(e){const m=svg.getScreenCTM();if(!m)return{x:0,y:0};const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const w=pt.matrixTransform(m.inverse());return{x:w.x,y:w.y};}
 let toastT=0;
 function toast(msg){const t=$('#b-toast');t.textContent=msg;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),4200);}
-function save(){try{localStorage.setItem(KEY,JSON.stringify(D));}catch(e){}}
+function save(){if(svcMode)return;try{localStorage.setItem(KEY,JSON.stringify(D));}catch(e){}}
 function load(){try{const s=localStorage.getItem(KEY);if(s){const o=JSON.parse(s);if(valid(o))return norm(o);}}catch(e){}return null;}
 const valid=o=>!!o&&o.v===2&&['vpcs','subnets','igws','rts','sgs','nacls','nodes','gwes','pcxs','tgws','vgws','tests'].every(k=>Array.isArray(o[k]))&&!!o.ext&&!!o.svc&&!!o.seq;
 function commit(){
@@ -2967,7 +3481,10 @@ function select(el){sel=el;tab='props';draw();renderPanel();}
 let drag=null,raf=0;
 const redraw=()=>{if(!raf)raf=requestAnimationFrame(()=>{raf=0;draw();});};
 function movable(t,id){return t==='vpc'?V(id):t==='subnet'?S(id):t==='node'?N(id):t==='internet'?D.ext:t==='svc'?svcPos(id):t==='onprem'?D.onprem:t==='tgw'?D.tgws.find(x=>x.id===id):t==='edge'?D.cdn:t==='ext'?D.exts.find(x=>x.id===id):null;}
+const tps=new Map();let pinch=null;
 svg.addEventListener('pointerdown',e=>{
+  tps.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(tps.size===2){const [a,b]=[...tps.values()];pinch={d:Math.hypot(a.x-b.x,a.y-b.y)||1,v:{x:view.x,y:view.y,w:view.w,h:view.h},c:toSvg({clientX:(a.x+b.x)/2,clientY:(a.y+b.y)/2})};drag=null;play.userCam=true;camT++;return;}if(play.running){play.userCam=true;camT++;}
   if(e.button)return;
   const w=toWorld(e);
   if(armed){const a=armed;disarm();place(a,w);return;}
@@ -2978,6 +3495,10 @@ svg.addEventListener('pointerdown',e=>{
   try{svg.setPointerCapture(e.pointerId);}catch(err){}
 });
 svg.addEventListener('pointermove',e=>{
+  if(tps.has(e.pointerId))tps.set(e.pointerId,{x:e.clientX,y:e.clientY});
+  if(pinch&&tps.size>=2){const [a,b]=[...tps.values()],d=Math.hypot(a.x-b.x,a.y-b.y);if(!d)return;
+    const w=Math.min(7000,Math.max(320,pinch.v.w*pinch.d/d)),s=w/pinch.v.w;
+    view.x=pinch.c.x-(pinch.c.x-pinch.v.x)*s;view.y=pinch.c.y-(pinch.c.y-pinch.v.y)*s;view.w=w;view.h=pinch.v.h*s;setView();return;}
   if(!drag)return;
   if(drag.k==='pan'){const r=svg.getBoundingClientRect(),sc=view.w/(r.width||1),dx=e.clientX-drag.cx,dy=e.clientY-drag.cy;if(Math.abs(dx)+Math.abs(dy)>3)drag.moved=true;view.x=drag.vx-dx*sc;view.y=drag.vy-dy*sc;setView();return;}
   const w=toWorld(e),dx=w.x-drag.sx,dy=w.y-drag.sy;
@@ -2995,6 +3516,7 @@ svg.addEventListener('pointermove',e=>{
   redraw();
 });
 const endDrag=e=>{
+  tps.delete(e.pointerId);if(tps.size<2)pinch=null;
   if(!drag)return;const d=drag;drag=null;
   if(d.k==='mv'&&!d.moved)select(d.el);
   else if(d.k==='pan'&&!d.moved){if(sel)select(null);}
@@ -3025,17 +3547,18 @@ function dropNode(d){
 }
 svg.addEventListener('pointerup',endDrag);
 svg.addEventListener('pointercancel',endDrag);
-svg.addEventListener('wheel',e=>{e.preventDefault();zoom(e.deltaY>0?1.12:0.89,toSvg(e));},{passive:false});
+svg.addEventListener('wheel',e=>{e.preventDefault();play.userCam=true;camT++;zoom(e.deltaY>0?1.12:0.89,toSvg(e));},{passive:false});
 
 /* ---------- palette ---------- */
-$('#b-pal').innerHTML='<div class="pal-h"><b>Components</b><input type="search" id="b-find" placeholder="Search components" aria-label="Search components" autocomplete="off"></div><div class="pal-list">'+PAL.map(g=>`<details class="pal-g" open><summary>${g[0]}<span>${g[1].length}</span></summary>`+g[1].map(p=>`<button data-p="${p[0]}" title="${esc(p[2])}"><span class="pi"><svg viewBox="-14 -14 28 28" aria-hidden="true">${IC[p[3]]}</svg></span><span class="pt"><b>${p[1]}</b><small>${p[2]}</small></span></button>`).join('')+'</details>').join('')+'</div><p class="pal-tip">Drag a component onto the canvas, or click it and then click where it should go.</p>';
+$('#b-pal').innerHTML='<div class="pal-h"><b>Components</b><button class="pal-tg" data-b="pal-toggle" aria-expanded="false">Show</button><input type="search" id="b-find" placeholder="Search components" aria-label="Search components" autocomplete="off"></div><div class="pal-list">'+PAL.map(g=>`<details class="pal-g" open><summary>${g[0]}<span>${g[1].length}</span></summary>`+g[1].map(p=>`<button data-p="${p[0]}" title="${esc(p[2])}"><span class="pi"><svg viewBox="-14 -14 28 28" aria-hidden="true">${IC[p[3]]}</svg></span><span class="pt"><b>${p[1]}</b><small>${p[2]}</small></span></button>`).join('')+'</details>').join('')+'</div><p class="pal-tip">Drag a component onto the canvas, or click it and then click where it should go.</p>';
 $('#b-find').addEventListener('input',e=>{
   const q=e.target.value.trim().toLowerCase();
   $$('#b-pal [data-p]').forEach(b=>{b.hidden=!!q&&b.textContent.toLowerCase().indexOf(q)<0;});
   $$('#b-pal .pal-g').forEach(g=>{g.hidden=![...g.querySelectorAll('[data-p]')].some(b=>!b.hidden);if(q)g.open=true;});
 });
 let pdrag=null;
-function arm(t){armed=t;$$('#b-pal button').forEach(b=>b.classList.toggle('armed',b.dataset.p===t));svg.classList.add('armed');toast('Now click on the canvas where the '+PNAME[t].toLowerCase()+' should go. Press Esc to cancel.');}
+function arm(t){
+  if(window.innerWidth<1024){const pl=$('#b-pal');pl.classList.remove('open');const tg=pl.querySelector('.pal-tg');if(tg){tg.textContent='Show';tg.setAttribute('aria-expanded','false');}const cv=$('#b-canvas');if(cv&&cv.scrollIntoView)cv.scrollIntoView({behavior:RM?'auto':'smooth',block:'center'});}armed=t;$$('#b-pal button').forEach(b=>b.classList.toggle('armed',b.dataset.p===t));svg.classList.add('armed');toast('Now click on the canvas where the '+PNAME[t].toLowerCase()+' should go. Press Esc to cancel.');}
 function disarm(){armed=null;$$('#b-pal button').forEach(b=>b.classList.remove('armed'));svg.classList.remove('armed');}
 $('#b-pal').addEventListener('pointerdown',e=>{const b=e.target.closest('[data-p]');if(!b||e.button)return;pdrag={type:b.dataset.p,sx:e.clientX,sy:e.clientY,moved:false};});
 window.addEventListener('pointermove',e=>{
@@ -3520,7 +4043,7 @@ function status(){
 
 /* ---------- packet animation ---------- */
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-function clearFx(){$('#b-fx').innerHTML='';}
+function clearFx(){$('#b-fx').innerHTML='';chkHide();}
 function stopAnim(){play.token++;play.running=false;play.cur=-1;if(play.resume){const r=play.resume;play.resume=null;r();}clearFx();}
 function ring(p,v){if(!p)return;const fx=$('#b-fx');const old=$('#b-ringg');if(old)old.remove();fx.insertAdjacentHTML('beforeend',`<g id="b-ringg"><circle class="b-ring ${v}" cx="${P(p).x}" cy="${P(p).y}" r="30"/></g>`);}
 function markStep(i){$$('#b-trace tr').forEach((li,j)=>{li.classList.toggle('todo',j>i);li.classList.toggle('cur',j===i);});const c=$('#b-trace tr.cur'),w=$('#b-flow .flow-t');if(c&&w)w.scrollTop=Math.max(0,c.offsetTop-w.clientHeight/2);}
@@ -3528,11 +4051,37 @@ function gate(){
   if(play.mode==='step')return new Promise(res=>{play.resume=res;});
   return sleep(play.mode==='fast'?330:1150);
 }
+/* follow camera: zoom in on the part of the network the packet is crossing */
+let camT=0;
+const followOn=()=>document.documentElement.dataset.follow!=='off';
+function camTo(r,ms){
+  const tk=++camT,f={x:view.x,y:view.y,w:view.w,h:view.h},t0=performance.now();
+  if(RM||!ms){Object.assign(view,r);setView();return;}
+  const st=now=>{if(tk!==camT)return;const t=Math.min(1,(now-t0)/ms),e=t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+    view.x=f.x+(r.x-f.x)*e;view.y=f.y+(r.y-f.y)*e;view.w=f.w+(r.w-f.w)*e;view.h=f.h+(r.h-f.h)*e;setView();if(t<1)requestAnimationFrame(st);};
+  requestAnimationFrame(st);
+}
+function cam(a,b,ms){
+  if(!followOn()||play.userCam)return;
+  const A=P(a),B=P(b),R=svg.getBoundingClientRect(),ar=R.width&&R.height?R.width/R.height:1.6;
+  const x0=Math.min(A.x,B.x)-150,x1=Math.max(A.x,B.x)+270,y0=Math.min(A.y,B.y)-120,y1=Math.max(A.y,B.y)+110;
+  let w=Math.max(x1-x0,600),h=Math.max(y1-y0,600/ar);
+  if(w/h<ar)w=h*ar;else h=w/ar;
+  const hm=play.home;if(hm&&w>hm.w){w=hm.w;h=hm.h;}
+  const cx=(x0+x1)/2,cy=(y0+y1)/2;
+  camTo({x:cx-w/2,y:cy-h/2,w,h},ms);
+}
+function setFollow(on){
+  document.documentElement.dataset.follow=on?'on':'off';
+  try{localStorage.setItem('ftp-follow',on?'on':'off');}catch(e){}
+  $$('[data-b="follow"]').forEach(b=>b.setAttribute('aria-pressed',String(on)));
+  if(!on){camT++;if(play.home&&play.running){Object.assign(view,play.home);setView();}if(window.FTP&&window.FTP.camHome)window.FTP.camHome(500);}
+}
 async function animate(res){
   stopAnim();
   const tk=play.token;
-  if(play.mode==='skip'||!res.steps.length){renderPanel();const l=res.steps[res.steps.length-1];if(l)ring(pos(l.at),res.ok?'ok':'deny');return;}
-  play.running=true;play.cur=-1;renderPanel();
+  if(play.mode==='skip'||!res.steps.length){renderPanel();const l=res.steps[res.steps.length-1];if(l){ring(pos(l.at),res.ok?'ok':'deny');showCheck(l,res.steps.length-1);}return;}
+  play.running=true;play.cur=-1;play.userCam=false;play.home={x:view.x,y:view.y,w:view.w,h:view.h};renderPanel();
   const fx=$('#b-fx');
   fx.innerHTML='<g id="b-trails" transform="'+isoM()+'"></g><g id="b-pkt"><circle class="halo" r="15"/><circle class="core" r="7.5"/></g><g id="b-tag"><rect width="238" height="38" rx="8"/><text class="k" x="10" y="15"></text><text class="a" x="10" y="30"></text></g>';
   const pk=$('#b-pkt'),tag=$('#b-tag');let cur=null,line=null,pts=[],ldir='';
@@ -3544,10 +4093,11 @@ async function animate(res){
     const s=res.steps[i],to=pos(s.at)||cur;
     if(!to)continue;
     label(s);
-    if(!cur){cur=to;put(to);seg(s.dir,to);}
+    if(!cur){cur=to;put(to);seg(s.dir,to);cam(to,to,600);}
     else if(Math.abs(cur.x-to.x)>1||Math.abs(cur.y-to.y)>1){
       if(ldir!==s.dir)seg(s.dir,cur);
       const from=cur,dist=Math.hypot(to.x-from.x,to.y-from.y),dur=RM?0:dist/(play.mode==='fast'?1500:620)*1000;
+      cam(from,to,Math.max(300,Math.min(dur||400,900)));
       await new Promise(done=>{
         if(!dur)return done();
         const t0=performance.now();
@@ -3562,11 +4112,12 @@ async function animate(res){
       if(tk!==play.token)return;
       cur=to;put(to);pts.push(to.x+','+to.y);line.setAttribute('points',pts.join(' '));
     }
-    play.cur=i;markStep(i);ring(to,s.v);
+    play.cur=i;markStep(i);ring(to,s.v);showCheck(s,i);
     if(i<res.steps.length-1)await gate();
   }
   if(tk!==play.token)return;
   play.running=false;play.resume=null;
+  {const hm=play.home;setTimeout(()=>{if(tk===play.token&&!play.running&&followOn()&&!play.userCam&&hm)camTo(hm,900);},1600);}
   if(res.ok){pk.remove();tag.remove();}else{pk.setAttribute('class','dead');tag.remove();}
   renderPanel();
 }
@@ -3670,12 +4221,16 @@ function loadTpl(k){
 }
 function onClick(e){
   const b=e.target.closest('[data-b]');
-  if(!b){const li=e.target.closest('#b-trace tr');if(li&&last&&!play.running){const s=last.res.steps[+li.dataset.i];if(s)ring(pos(s.at),s.v);}return;}
+  if(!b){const li=e.target.closest('#b-trace tr');if(li&&last&&!play.running){const s=last.res.steps[+li.dataset.i];if(s){ring(pos(s.at),s.v);showCheck(s,+li.dataset.i);}}return;}
   if(b.disabled)return;
   const d=b.dataset,a=d.b;
   if(a==='view'){setMode(d.v);return;}
   if(a==='theme'){setTheme(d.v);return;}
   if(a==='dim'){setDim(d.v);return;}
+  if(a==='follow'){setFollow(!followOn());return;}
+  if(a==='menu'){const o=document.body.classList.toggle('menu-open');b.setAttribute('aria-expanded',String(o));return;}
+  if(a==='pal-toggle'){const o=$('#b-pal').classList.toggle('open');b.textContent=o?'Hide':'Show';b.setAttribute('aria-expanded',String(o));return;}
+  if(a==='lall'){$('#steps').classList.toggle('open');if(window.FTP&&window.FTP.renderSteps)window.FTP.renderSteps();return;}
   if(a==='tab'){tab=d.v;renderPanel();}
   else if(a==='sel')select(d.el);
   else if(a==='del'){del(d.t,d.id);sel=null;commit();}
@@ -3705,18 +4260,22 @@ function onClick(e){
   else if(a==='play-check'){T=Object.assign({},T,{signed:false},D.tests[+d.i]);delete T.expect;runTest();}
   else if(a==='mode'){play.mode=d.v;$$('#b-mode button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.v===d.v)));if(play.resume&&d.v!=='step'){const r=play.resume;play.resume=null;r();}if(play.running)renderPanel();}
   else if(a==='next-hop'){if(play.resume){const r=play.resume;play.resume=null;r();}}
-  else if(a==='zoom')zoom(+d.k);
-  else if(a==='fit')fit();
+  else if(a==='zoom'){play.userCam=true;camT++;zoom(+d.k);}
+  else if(a==='fit'){play.userCam=true;camT++;fit();}
   else if(a==='tpl'){dlgClose();loadTpl(d.v);}
   else if(a==='tut'){dlgClose();startTut(d.v);}
   else if(a==='templates')openTemplates();
-  else if(a==='panel'){const on=document.body.classList.toggle('no-'+d.v);b.setAttribute('aria-pressed',String(!on));requestAnimationFrame(()=>{if(document.body.dataset.view==='design')setView();});}
+  else if(a==='panel'){const on=document.body.classList.toggle('no-'+d.v);b.setAttribute('aria-pressed',String(!on));requestAnimationFrame(()=>{if(dv())setView();});}
   else if(a==='stat-review'){sel=null;tab='props';draw();renderPanel();}
   else if(a==='scratch')startScratch();
   else if(a==='tut-go')goStep(+d.i);
   else if(a==='tut-next')goStep(tut.i+1);
   else if(a==='tut-back')goStep(tut.i-1);
   else if(a==='tut-try'){runTest(tut.steps[tut.i].tries[+d.i].t);}
+  else if(a==='tut-finish'&&tut&&tut.lesson)finishLesson();
+  else if(a==='svc-lesson')startLesson(d.v);
+  else if(a==='chk-open'){if(last&&!play.running){const k=+d.i;showCheck(last.res.steps[k],last.res.steps.length-1,k);}else if(last){const k=+d.i;showCheck(last.res.steps[play.cur],play.cur,k);}}
+
   else if(a==='tut-finish'){tut=null;tab='test';draw();renderPanel();toast('Tutorial finished. The Test tab shows the saved checks for the whole design.');}
   else if(a==='tut-exit'){tut=null;tab='props';draw();renderPanel();toast('You’ve left the tutorial. The design stays as it is now, so you can keep building on it.');}
   else if(a==='clear'){if(hasStuff())ask({title:'Clear the canvas?',intro:'This removes the whole design, including its saved checks.',ok:'Clear',done:()=>{D=blankD();sel=null;last=null;commit();fit();}});}
@@ -3729,7 +4288,7 @@ document.addEventListener('click',onClick);
 document.addEventListener('click',e=>{$$('details.menu[open]').forEach(m=>{if(!m.contains(e.target)||e.target.closest('.menu-p button'))m.open=false;});});
 $('#builder').addEventListener('change',onChange);
 document.addEventListener('keydown',e=>{
-  if(document.body.dataset.view!=='design')return;
+  if(!dv())return;
   if(e.key==='Escape'&&armed){disarm();return;}
   const tg=e.target.tagName;
   if((e.key==='Delete'||(e.key==='Backspace'&&(e.target===document.body||e.target===svg)))&&sel&&tg!=='INPUT'&&tg!=='TEXTAREA'&&tg!=='SELECT'&&!$('#b-dlg').open){
@@ -3739,7 +4298,7 @@ document.addEventListener('keydown',e=>{
     del(t,id);sel=null;commit();
   }
 });
-window.addEventListener('resize',()=>{if(document.body.dataset.view==='design')setView();});
+window.addEventListener('resize',()=>{if(dv())setView();});
 
 /* ---------- tutorials, templates, scratch, theme ---------- */
 function diffEls(a,b){
@@ -3780,11 +4339,11 @@ function goStep(i){
   stopAnim();disarm();
   const prev=i?JSON.parse(tut.steps[i-1].state):blankD();
   tut.i=i;D=norm(JSON.parse(tut.steps[i].state));tut.hl=diffEls(prev,D);
-  sel=null;last=null;tab='tut';save();draw();renderPanel();$('#b-panel').scrollTop=0;
+  sel=null;last=null;tab='tut';save();draw();renderPanel();$('#b-panel').scrollTop=0;lessonSync();chkHide();
 }
 function pTut(){
   const s=tut.steps[tut.i],n=tut.steps.length,lastStep=tut.i===n-1,names=[...new Set(tut.hl.map(elName).filter(Boolean))];
-  let h=`<p class="mut sm" style="margin:0">Step by step: ${esc(tut.name)}</p><div class="tut-prog" aria-hidden="true"><i style="width:${(tut.i+1)/n*100}%"></i></div>
+  let h=`<p class="mut sm" style="margin:0">${tut.lesson?'Lesson':'Step by step'}: ${esc(tut.name)}</p><div class="tut-prog" aria-hidden="true"><i style="width:${(tut.i+1)/n*100}%"></i></div>
     <p class="sm mut" style="margin:0 0 2px">Step ${tut.i+1} of ${n}</p><h2>${esc(s.title)}</h2>
     <h3>What it is</h3><p>${esc(s.what)}</p><h3>Why it’s here</h3><p>${esc(s.why)}</p>`;
   if(names.length&&!lastStep)h+=`<p class="sm"><span class="mut">Added or changed in this step, outlined on the canvas:</span> ${tut.hl.filter((el,j,a)=>a.findIndex(x=>elName(x)===elName(el))===j&&elName(el)).slice(0,10).map(el=>go(el,elName(el))).join(', ')}</p>`;
@@ -3796,10 +4355,10 @@ function pTut(){
       else h+=`<div class="b-res ${r.ok?'ok':'no'}"><b>${esc(r.title)}</b>${r.ok?'':(r.phase==='rep'?'The request arrived, but its reply was lost. ':'')}${esc(r.text)}<div class="row" style="margin-bottom:0"><button class="btn" data-b="tab" data-v="test">See every hop</button></div></div>`;
     }
   }
-  if(lastStep)h+=`<div class="row"><button class="btn" data-b="tab" data-v="test">See the saved checks</button></div>`;
-  h+=`<div class="tut-nav">${tut.i?'<button class="btn" data-b="tut-back">Back</button>':'<span></span>'}${lastStep?'<button class="btn primary" data-b="tut-finish">Finish</button>':'<button class="btn primary" data-b="tut-next">Next step</button>'}</div>`;
+  if(lastStep&&D.tests.length)h+=`<div class="row"><button class="btn" data-b="tab" data-v="test">See the saved checks</button></div>`;
+  h+=`<div class="tut-nav">${tut.i?'<button class="btn" data-b="tut-back">Back</button>':'<span></span>'}${lastStep?'<button class="btn primary" data-b="tut-finish">'+(tut.lesson?(nextLesson()?'Next lesson: '+esc(nextLesson()[1]):'Finish'):'Finish')+'</button>':'<button class="btn primary" data-b="tut-next">Next step</button>'}</div>`;
   h+='<h3>All steps</h3><ol class="tut-steps">'+tut.steps.map((x,j)=>`<li class="${j<tut.i?'done':j===tut.i?'cur':''}"><button data-b="tut-go" data-i="${j}">${esc(x.title)}</button></li>`).join('')+'</ol>';
-  h+=`<p class="mut sm" style="margin-top:12px">Each step rebuilds the design up to that point, so changes you make on the canvas are replaced when you move to another step. To keep them, leave the tutorial.</p><button class="lk sm" data-b="tut-exit">Leave the tutorial and keep this design</button>`;
+  h+=tut.lesson?`<p class="mut sm" style="margin-top:12px">Each step rebuilds the network up to that point, so changes you make on the canvas are replaced when you move to another step.</p>`:`<p class="mut sm" style="margin-top:12px">Each step rebuilds the design up to that point, so changes you make on the canvas are replaced when you move to another step. To keep them, leave the tutorial.</p><button class="lk sm" data-b="tut-exit">Leave the tutorial and keep this design</button>`;
   return h;
 }
 function tplCards(){
@@ -3822,25 +4381,27 @@ function renderEmpty(){
 }
 function setDim(v){
   document.documentElement.classList.toggle('iso',v!=='2d');
-  try{localStorage.setItem('ftp-dim',v==='2d'?'2d':'3d');}catch(e){}
+  try{localStorage.setItem('ftp-dim2',v==='2d'?'2d':'3d');}catch(e){}
   $$('#dimsw button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===(v==='2d'?'2d':'3d'))));
   if(window.FTP&&window.FTP.redraw)window.FTP.redraw();
   stopAnim();draw();
-  if(document.body.dataset.view==='design')fit();else fitted=false;
+  if(dv())fit();else fitted=false;
   renderPanel();
 }
 function setTheme(v){
   const r=document.documentElement;
   if(v==='light'||v==='dark')r.dataset.theme=v;else{delete r.dataset.theme;v='auto';}
-  try{localStorage.setItem('ftp-theme',v);}catch(e){}
+  try{localStorage.setItem('ftp-theme2',v);}catch(e){}
   $$('#themesw button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===v)));
 }
-{let tv='auto';try{tv=localStorage.getItem('ftp-theme')||'auto';}catch(e){}setTheme(tv);}
+{let tv='light';try{tv=localStorage.getItem('ftp-theme2')||'light';}catch(e){}setTheme(tv);}
 renderEmpty();
+{let fv='on';try{fv=localStorage.getItem('ftp-follow')||'on';}catch(e){}setFollow(fv!=='off');}
 $$('#dimsw button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===(isIso()?'3d':'2d'))));
 
 /* ---------- switching between the tour and the designer ---------- */
 function setMode(m,fromHash){
+  if(m==='design'&&svcMode)exitLesson();
   document.body.dataset.view=m;
   $$('#viewsw button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===m)));
   if(m==='design'){
