@@ -1360,24 +1360,174 @@ body.svc-mode.no-left #builder{--L:0px}
 
 @media (max-width:760px){#b-panel p.sm:has(>span.mut){display:none}}
 @media (max-width:1023px){.canvas-wrap .zoomctl.lz{flex-direction:row;right:8px;bottom:8px}.canvas-wrap .zoomctl.lz button{width:34px;height:32px}.canvas-wrap .zoomctl.lz button+button{border-top:0;border-left:1px solid var(--line)}}
+
+/* ===== home page, simplified header, guided tour ===== */
+#home{display:none;flex:1;min-height:0;overflow-y:auto;background:var(--bg)}
+body[data-view="home"] #home{display:block}
+body[data-view="home"] main,body[data-view="home"] #builder{display:none!important}
+body[data-view="home"] #hdesign,body[data-view="home"] .help-btn{display:none}
+body[data-view="learn"] #hdesign{display:none}
+#hlesson{display:none!important}
+.h-wrap{max-width:1080px;margin:0 auto;padding:48px 24px 40px}
+.h-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:32px;align-items:center}
+.h-eye{display:inline-block;font:700 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--brand);background:var(--brand-soft);padding:7px 10px;border-radius:2px}
+.h-txt h1{font:800 38px/1.15 var(--mono);letter-spacing:-.01em;color:var(--title);margin:16px 0 14px}
+.h-txt p{font-size:15px;line-height:1.75;color:var(--muted);margin:0;max-width:56ch}
+.h-art{width:100%;height:auto}
+.ha-vpc{fill:var(--vpc-fill);stroke:var(--vpc-line);stroke-width:1.5;stroke-dasharray:7 5}
+.ha-pub{fill:var(--pub-fill);stroke:var(--pub);stroke-width:1.4}
+.ha-priv{fill:var(--priv-fill);stroke:var(--priv);stroke-width:1.4}
+.ha-l{font:700 11px var(--mono);fill:var(--title)}
+.ha-s{font:600 10px var(--mono)} .ha-s.pub{fill:var(--pub)} .ha-s.priv{fill:var(--priv)}
+.ha-road{fill:none;stroke:var(--road);stroke-width:2;stroke-dasharray:6 5}
+.ha-node{fill:var(--surface);stroke:var(--iso-line);stroke-width:1.5}
+.ha-ic{fill:none;stroke:var(--iso-line);stroke-width:1.5;stroke-linecap:round}
+.ha-pkt{fill:var(--accent);filter:drop-shadow(0 0 5px var(--accent))}
+.h-cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:40px 0 0}
+.h-card{display:flex;flex-direction:column;align-items:flex-start;gap:8px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:24px 24px 20px;cursor:pointer;color:var(--ink);font:inherit;transition:border-color .15s,transform .15s,box-shadow .15s}
+.h-card:hover,.h-card:focus-visible{border-color:var(--brand);transform:translateY(-2px);box-shadow:0 10px 30px rgba(35,65,181,.12)}
+.h-card .h-ic{width:44px;height:44px;border-radius:4px;background:var(--brand-soft);display:grid;place-items:center;margin-bottom:6px}
+.h-card .h-ic svg{width:24px;height:24px;fill:none;stroke:var(--brand);stroke-width:1.7;stroke-linejoin:round;stroke-linecap:round}
+.h-card b{font:800 20px/1.25 var(--mono);color:var(--title)}
+.h-card p{margin:0;color:var(--muted);font-size:13.5px;line-height:1.7}
+.h-go{margin-top:10px;font:700 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;background:var(--brand);color:var(--brand-ink);padding:11px 16px;border-radius:2px}
+.h-card small{font-size:12px;color:var(--faint)}
+.h-how,.h-topics{margin-top:44px}
+.h-how h2,.h-topics h2{font:800 15px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--title);margin:0 0 16px}
+.h-how ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.h-how li{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:18px}
+.h-how li span{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--brand);color:var(--brand-ink);font:700 13px/1 var(--mono);margin-bottom:10px}
+.h-how li b{display:block;font:800 15px/1.3 var(--mono);color:var(--title)}
+.h-how li p{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.65}
+.h-topics p{margin:0;color:var(--muted);line-height:2;font-size:13px}
+.site-foot{flex:none;text-align:center;padding:9px 16px;font:500 12px/1.3 var(--mono);color:var(--muted);border-top:1px solid var(--line);background:var(--surface);letter-spacing:.04em}
+.site-foot b{color:var(--title);font-weight:700}
+/* header */
+button.brand{background:none;border:0;padding:0;cursor:pointer;color:inherit;text-align:left;font:inherit}
+button.brand:hover .bt b{color:var(--brand)}
+.hmode #viewsw button{height:36px;padding:0 18px}
+.help-btn{font:700 16px/1 var(--mono)}
+.setw{position:relative}
+.settings{display:none;position:absolute;right:0;top:calc(100% + 8px);z-index:40;min-width:260px;background:var(--surface);border:1px solid var(--line-strong);border-radius:3px;box-shadow:var(--shadow-lg);padding:8px 14px}
+body.menu-open .settings{display:block}
+.set-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:9px 0}
+.set-row+.set-row{border-top:1px solid var(--line)}
+.set-row>span{font:700 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--title)}
+.settings #themesw,.settings .hicons{display:flex!important}
+.menu-btn{display:grid!important}
+.menu-btn[aria-expanded="true"]{background:var(--brand-soft);color:var(--brand)}
+.flab{font:700 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);flex:none}
+/* clear primary actions */
+.cta{animation:ctapulse 2.2s ease-out infinite}
+.btn.ready{animation:ctapulse 2.2s ease-out infinite}
+#cap-actions .btn.primary{animation:ctapulse 2.2s ease-out infinite}
+@keyframes ctapulse{0%{box-shadow:0 0 0 0 rgba(35,65,181,.45)}70%{box-shadow:0 0 0 10px rgba(35,65,181,0)}100%{box-shadow:0 0 0 0 rgba(35,65,181,0)}}
+.btn .pl{font-size:10px;margin-right:2px}
+@media (prefers-reduced-motion: reduce){.cta,.btn.ready,#cap-actions .btn.primary{animation:none}}
+/* guided tour */
+#coach{position:fixed;inset:0;z-index:90;pointer-events:none}
+.co-ring{position:fixed;border:2px solid var(--brand);border-radius:4px;box-shadow:0 0 0 9999px rgba(10,16,40,.42);transition:all .25s ease}
+.co-pop{position:fixed;pointer-events:auto;background:var(--surface);border:1px solid var(--line-strong);border-top:3px solid var(--brand);border-radius:3px;box-shadow:var(--shadow-lg);padding:14px 16px 12px;transition:top .25s ease,left .25s ease}
+.co-n{font:700 10.5px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.co-pop b{display:block;font:800 16px/1.3 var(--mono);color:var(--title);margin:6px 0 4px}
+.co-pop p{margin:0;font-size:13px;line-height:1.6;color:var(--ink)}
+.co-a{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
+.co-a .lk{background:none;border:0;cursor:pointer;font:500 12px var(--mono);color:var(--muted)}
+@media (max-width:1023px){
+  .h-hero{grid-template-columns:1fr}
+  .h-art{max-width:420px}
+  .h-cards,.h-how ol{grid-template-columns:1fr}
+  .set-panels{display:none!important}
+}
+@media (max-width:760px){
+  .h-wrap{padding:28px 16px 28px}
+  .h-txt h1{font-size:26px}
+  .h-txt p{font-size:14px}
+  .h-card{padding:18px}
+  .h-card b{font-size:18px}
+  .settings{position:fixed;left:8px;right:8px;top:auto;min-width:0}
+  .setw{order:2}
+  .help-btn{order:1}
+  .top>.grow{display:none}
+  body[data-view="home"] .top>.hg.hmode{order:5}
+}
+.b-pal .pal-tg{display:none}
+@media (max-width:1023px){.b-pal .pal-tg{display:inline-flex;grid-template-columns:none;width:auto}}
+@media (max-width:760px){.h-art{display:none}.h-cards{margin-top:24px}}
 </style>
 <script>var t=null,d=null;try{t=localStorage.getItem("ftp-theme2");d=localStorage.getItem("ftp-dim2");}catch(e){}if(t!=="auto")document.documentElement.dataset.theme=t==="dark"?"dark":"light";if(d==="3d")document.documentElement.classList.add("iso");</script>
 </head>
-<body data-view="learn">
+<body data-view="home">
 <header class="top">
-  <div class="brand"><span class="logo" aria-hidden="true"><svg viewBox="0 0 46 46"><path d="M2 11V2h9M35 2h9v9M44 35v9h-9M11 44H2v-9" fill="none" stroke="var(--title)" stroke-width="2"/><path d="M23 9L35 15.5L23 22L11 15.5Z" fill="var(--brand)"/><path d="M11 17.5L22 23.5V37L11 31Z" fill="var(--title)"/><path d="M35 17.5L24 23.5V37L35 31Z" fill="var(--brand)" opacity=".75"/></svg></span><span class="bt"><b>Follow the <i>Packet</i></b><small>Learn how AWS networking works</small></span></div>
-  <div class="hsep"></div>
-  <div class="hg"><span class="hl"><span>Mode</span></span><div class="boxes" id="viewsw" role="group" aria-label="Mode"><button data-b="view" data-v="learn" aria-pressed="true">Learn</button><button data-b="view" data-v="design" aria-pressed="false">Design</button></div></div>
-  <div class="hg" id="hlesson"><span class="hl"><span>Lesson</span><b id="hl-name"></b></span><div class="boxes" id="hboxes" role="group" aria-label="Lessons"></div></div>
-  <div class="hg" id="hdesign"><span class="hl"><span>Design</span></span><div class="hacts"><button class="btn primary" data-b="templates">Templates</button><button class="btn" data-b="scratch">New</button><details class="menu"><summary class="btn">Share</summary><div class="menu-p"><button data-b="share">Copy design as text</button><button data-b="paste">Paste a design</button></div></details></div></div>
+  <button class="brand" data-b="home" title="Home"><span class="logo" aria-hidden="true"><svg viewBox="0 0 46 46"><path d="M2 11V2h9M35 2h9v9M44 35v9h-9M11 44H2v-9" fill="none" stroke="var(--title)" stroke-width="2"/><path d="M23 9L35 15.5L23 22L11 15.5Z" fill="var(--brand)"/><path d="M11 17.5L22 23.5V37L11 31Z" fill="var(--title)"/><path d="M35 17.5L24 23.5V37L35 31Z" fill="var(--brand)" opacity=".75"/></svg></span><span class="bt"><b>Follow the <i>Packet</i></b><small>Learn how AWS networking works</small></span></button>
+  <div class="hg hmode"><div class="boxes" id="viewsw" role="group" aria-label="Mode"><button data-b="view" data-v="learn" aria-pressed="false">Learn</button><button data-b="view" data-v="design" aria-pressed="false">Design</button></div></div>
+  <div class="hg" id="hlesson" hidden><span class="hl"><span>Lesson</span><b id="hl-name"></b></span><div class="boxes" id="hboxes" role="group" aria-label="Lessons"></div></div>
+  <div class="hg" id="hdesign"><div class="hacts"><button class="btn primary" data-b="templates">Templates</button><button class="btn" data-b="scratch">New</button><details class="menu"><summary class="btn">Share</summary><div class="menu-p"><button data-b="share">Copy design as text</button><button data-b="paste">Paste a design</button></div></details></div></div>
   <span class="grow"></span>
-  <div class="hg"><span class="hl"><span>View</span></span><div class="boxes" id="dimsw" role="group" aria-label="Canvas view"><button data-b="dim" data-v="2d" aria-pressed="true" title="Flat view">2D</button><button data-b="dim" data-v="3d" aria-pressed="false" title="Isometric 3D view">3D</button></div></div>
-  <div class="hsep"></div>
-  <div class="hicons"><button class="ib" data-b="panel" data-v="left" aria-pressed="true" title="Show or hide the left panel" aria-label="Left panel"><svg viewBox="0 0 20 20"><rect x="2.5" y="3.5" width="15" height="13" rx="1"/><rect class="f" x="2.5" y="3.5" width="5" height="13"/></svg></button><button class="ib" data-b="panel" data-v="bottom" aria-pressed="true" title="Show or hide the packet flow" aria-label="Packet flow panel"><svg viewBox="0 0 20 20"><rect x="2.5" y="3.5" width="15" height="13" rx="1"/><rect class="f" x="2.5" y="11.5" width="15" height="5"/></svg></button><button class="ib" data-b="panel" data-v="right" aria-pressed="true" title="Show or hide the right panel" aria-label="Right panel"><svg viewBox="0 0 20 20"><rect x="2.5" y="3.5" width="15" height="13" rx="1"/><rect class="f" x="12.5" y="3.5" width="5" height="13"/></svg></button></div>
-  <div class="hsep"></div>
-  <div class="seg" id="themesw" role="group" aria-label="Colour theme"><button data-b="theme" data-v="auto" aria-pressed="true" aria-label="Match system theme" title="Match system"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="12" height="8.5" rx="1"/><path d="M5.5 14h5"/></svg></button><button data-b="theme" data-v="light" aria-pressed="false" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="8" cy="8" r="3" fill="currentColor"/><path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M3.4 12.6l1-1M11.6 4.4l1-1"/></svg></button><button data-b="theme" data-v="dark" aria-pressed="false" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M13.5 9.5A5.5 5.5 0 0 1 6.5 2.5a5.5 5.5 0 1 0 7 7Z"/></svg></button></div>
-  <button class="ib menu-btn" data-b="menu" aria-expanded="false" aria-label="View and theme settings" title="Settings"><svg viewBox="0 0 20 20"><path d="M3 6h14M3 14h14"/><circle cx="7" cy="6" r="2" fill="var(--surface)"/><circle cx="13" cy="14" r="2" fill="var(--surface)"/></svg></button>
+  <button class="ib help-btn" data-b="help" title="Show me how this page works" aria-label="Show me how this page works">?</button>
+  <div class="setw">
+    <button class="ib menu-btn" data-b="menu" aria-expanded="false" aria-label="View and theme settings" title="Settings"><svg viewBox="0 0 20 20"><path d="M3 6h14M3 14h14"/><circle cx="7" cy="6" r="2" fill="var(--surface)"/><circle cx="13" cy="14" r="2" fill="var(--surface)"/></svg></button>
+    <div class="settings" id="settings">
+      <div class="set-row"><span>View</span><div class="boxes" id="dimsw" role="group" aria-label="Canvas view"><button data-b="dim" data-v="2d" aria-pressed="true" title="Flat view">2D</button><button data-b="dim" data-v="3d" aria-pressed="false" title="Isometric 3D view">3D</button></div></div>
+      <div class="set-row"><span>Theme</span><div class="seg" id="themesw" role="group" aria-label="Colour theme"><button data-b="theme" data-v="auto" aria-pressed="true" aria-label="Match system theme" title="Match system"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="12" height="8.5" rx="1"/><path d="M5.5 14h5"/></svg></button><button data-b="theme" data-v="light" aria-pressed="false" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="8" cy="8" r="3" fill="currentColor"/><path d="M8 1.5v1.5M8 13v1.5M1.5 8H3M13 8h1.5M3.4 3.4l1 1M11.6 11.6l1 1M3.4 12.6l1-1M11.6 4.4l1-1"/></svg></button><button data-b="theme" data-v="dark" aria-pressed="false" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M13.5 9.5A5.5 5.5 0 0 1 6.5 2.5a5.5 5.5 0 1 0 7 7Z"/></svg></button></div></div>
+      <div class="set-row set-panels"><span>Panels</span><div class="hicons"><button class="ib" data-b="panel" data-v="left" aria-pressed="true" title="Show or hide the left panel" aria-label="Left panel"><svg viewBox="0 0 20 20"><rect x="2.5" y="3.5" width="15" height="13" rx="1"/><rect class="f" x="2.5" y="3.5" width="5" height="13"/></svg></button><button class="ib" data-b="panel" data-v="bottom" aria-pressed="true" title="Show or hide the packet flow" aria-label="Packet flow panel"><svg viewBox="0 0 20 20"><rect x="2.5" y="3.5" width="15" height="13" rx="1"/><rect class="f" x="2.5" y="11.5" width="15" height="5"/></svg></button><button class="ib" data-b="panel" data-v="right" aria-pressed="true" title="Show or hide the right panel" aria-label="Right panel"><svg viewBox="0 0 20 20"><rect x="2.5" y="3.5" width="15" height="13" rx="1"/><rect class="f" x="12.5" y="3.5" width="5" height="13"/></svg></button></div></div>
+    </div>
+  </div
+>
 </header>
+<section id="home" aria-label="Home">
+  <div class="h-wrap">
+    <div class="h-hero">
+      <div class="h-txt">
+        <span class="h-eye">Interactive AWS networking</span>
+        <h1>See how a packet really moves through AWS.</h1>
+        <p>Build VPCs, subnets, gateways and firewalls, then send a packet and watch every route table, network ACL and security group decide where it goes.</p>
+      </div>
+      <svg class="h-art" viewBox="0 0 420 260" aria-hidden="true">
+        <rect x="70" y="60" width="330" height="180" rx="10" class="ha-vpc"/>
+        <text x="178" y="82" class="ha-l">VPC 10.0.0.0/16</text>
+        <rect x="90" y="100" width="130" height="120" rx="8" class="ha-pub"/>
+        <rect x="245" y="100" width="135" height="120" rx="8" class="ha-priv"/>
+        <text x="102" y="120" class="ha-s pub">public subnet</text>
+        <text x="257" y="120" class="ha-s priv">private subnet</text>
+        <path id="ha-path" d="M30 30 L155 30 L155 165 L312 165" class="ha-road"/>
+        <circle cx="30" cy="30" r="16" class="ha-node"/><path d="M19 30h22M30 19a14 11 0 0 1 0 22a14 11 0 0 1 0-22" class="ha-ic"/>
+        <rect x="139" y="14" width="32" height="32" rx="6" class="ha-node"/><path d="M148 38v-8a7 7 0 0 1 14 0v8M155 35v-9" class="ha-ic"/>
+        <rect x="139" y="149" width="32" height="32" rx="6" class="ha-node"/><path d="M147 160h16M147 170h16" class="ha-ic"/>
+        <rect x="296" y="149" width="32" height="32" rx="6" class="ha-node"/><path d="M304 160h16M304 170h16" class="ha-ic"/>
+        <circle r="7" class="ha-pkt"><animateMotion dur="3.6s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.8;1" calcMode="linear"><mpath href="#ha-path"/></animateMotion></circle>
+      </svg>
+    </div>
+    <div class="h-cards">
+      <button class="h-card" data-b="go-learn">
+        <span class="h-ic"><svg viewBox="0 0 24 24"><path d="M3 6.5L12 3l9 3.5-9 3.5z"/><path d="M7 8.2V14c0 1.6 2.2 3 5 3s5-1.4 5-3V8.2"/></svg></span>
+        <b>Start the tutorial</b>
+        <p>18 short lessons, from your first VPC to transit gateways. Each lesson builds the network one step at a time and tells you exactly what to press.</p>
+        <span class="h-go">Start lesson 1 →</span>
+        <small>Best if you’re new to AWS networking</small>
+      </button>
+      <button class="h-card" data-b="go-design">
+        <span class="h-ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><path d="M10 6.5h4.5a2 2 0 0 1 2 2V14"/></svg></span>
+        <b>Design a network</b>
+        <p>Drag and drop VPCs, subnets, gateways, servers and AWS services, then test any connection end to end.</p>
+        <span class="h-go">Open the designer →</span>
+        <small>Start from a template or a blank canvas</small>
+      </button>
+    </div>
+    <div class="h-how">
+      <h2>How it works</h2>
+      <ol>
+        <li><span>1</span><b>Build</b><p>Add a part of the network yourself, or let a lesson add it for you.</p></li>
+        <li><span>2</span><b>Send</b><p>Press the blue ▶ button to send a packet from one place to another.</p></li>
+        <li><span>3</span><b>Watch</b><p>Follow it hop by hop. Each check shows why the packet was allowed or dropped.</p></li>
+      </ol>
+    </div>
+    <div class="h-topics">
+      <h2>What you’ll learn</h2>
+      <p>VPC · Subnets · Internet gateway · Route tables · NAT gateway · S3 · Security groups · Network ACLs · Load balancers · RDS · ElastiCache · EKS · Lambda · VPC endpoints · API Gateway · CloudFront · Route 53 · WAF · VPC peering · Transit gateway · VPN</p>
+    </div>
+  </div>
+</section>
 <main>
   <nav class="lessons pnl" id="steps" aria-label="Lessons"></nav>
   <section class="stage pnl" id="stage">
@@ -1404,7 +1554,7 @@ body.svc-mode.no-left #builder{--L:0px}
   <section class="flow pnl" id="flow">
     <div class="fh"><h2>Packet flow</h2><div class="flegend"><span><i></i>Request</span><span><i class="rep"></i>Reply</span><span><i class="bad"></i>Dropped</span></div><span class="grow"></span>
       <button class="btn tog" data-b="follow" aria-pressed="true" title="Zoom in on the part of the network the packet is crossing"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5"/><circle cx="8" cy="8" r="1.6" class="f"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2"/></svg>Follow</button>
-      <div class="seg boxes" id="mode" role="group" aria-label="Playback"><button data-act="mode" data-v="step" aria-pressed="false">Step</button><button data-act="mode" data-v="play" aria-pressed="true">Play</button><button data-act="mode" data-v="fast" aria-pressed="false">Fast</button></div></div>
+      <span class="flab">Speed</span><div class="seg boxes" id="mode" role="group" aria-label="Animation speed"><button data-act="mode" data-v="step" aria-pressed="false" title="One hop at a time: press Next hop to continue">Step</button><button data-act="mode" data-v="play" aria-pressed="true" title="Normal speed">Normal</button><button data-act="mode" data-v="fast" aria-pressed="false">Fast</button></div></div>
     <div class="fbody">
       <div class="caption" id="caption" data-tone="idle" aria-live="polite">
         <div><span id="cap-badge" hidden></span><div id="cap-title" hidden></div><div id="cap-text"></div><div id="cap-extra" hidden></div></div>
@@ -1436,14 +1586,15 @@ body.svc-mode.no-left #builder{--L:0px}
   <section class="flow pnl" id="b-flow">
     <div class="fh"><h2>Packet flow</h2><div class="flegend"><span><i></i>Request</span><span><i class="rep"></i>Reply</span><span><i class="bad"></i>Blocked</span></div><span class="flbl" id="b-flow-lbl"></span><span class="grow"></span>
       <button class="btn tog" data-b="follow" aria-pressed="true" title="Zoom in on the part of the network the packet is crossing"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5"/><circle cx="8" cy="8" r="1.6" class="f"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2"/></svg>Follow</button>
-      <div class="seg boxes" id="b-mode" role="group" aria-label="Playback"><button data-b="mode" data-v="step" aria-pressed="false">Step</button><button data-b="mode" data-v="play" aria-pressed="true">Play</button><button data-b="mode" data-v="fast" aria-pressed="false">Fast</button><button data-b="mode" data-v="skip" aria-pressed="false">Instant</button></div>
-      <button class="btn primary" data-b="next-hop" id="b-next" hidden>Next hop</button><button class="btn" data-b="replay" id="b-replay" hidden>Replay</button></div>
+      <span class="flab">Speed</span><div class="seg boxes" id="b-mode" role="group" aria-label="Animation speed"><button data-b="mode" data-v="step" aria-pressed="false" title="One hop at a time: press Next hop to continue">Step</button><button data-b="mode" data-v="play" aria-pressed="true" title="Normal speed">Normal</button><button data-b="mode" data-v="fast" aria-pressed="false">Fast</button><button data-b="mode" data-v="skip" aria-pressed="false">Instant</button></div>
+      <button class="btn primary cta" data-b="next-hop" id="b-next" hidden>Next hop →</button><button class="btn" data-b="replay" id="b-replay" hidden>Replay</button></div>
     <div class="fbody2"><div class="flow-t" data-empty="Send a packet from the Test tab, or replay a saved check, to see every hop it takes."><table><thead><tr><th>No.</th><th>Where</th><th>Source</th><th>Destination</th><th>What happens</th></tr></thead><tbody id="b-trace"></tbody></table></div><div class="chk" id="b-check" aria-live="polite"></div></div>
   </section>
 </section>
 <dialog id="b-dlg"></dialog>
 <div id="b-ghost"></div>
 
+<footer class="site-foot">Made by <b>Prateek Singh</b></footer>
 <noscript><p style="padding:20px">This playground needs JavaScript to run the network simulation.</p></noscript>
 
 <script>
@@ -1930,7 +2081,7 @@ function renderTasks(){
   if(box) box.innerHTML=tasks.map((t,i)=>{
     const st=cur===-1||i<cur?'done':i===cur?'cur':'todo';
     const label=typeof t.btn==='function'?t.btn(state):t.btn;
-    return `<li class="${st}"><div><p>${t.text}</p>${st==='cur'?`<button class="btn primary" data-act="task" data-i="${i}">${label}</button>`:''}</div></li>`;
+    return `<li class="${st}"><div><p>${t.text}</p>${st==='cur'?`<button class="btn primary cta" data-act="task" data-i="${i}">${label}</button>`:''}</div></li>`;
   }).join('');
   const nx=$('#next'); if(nx) nx.classList.toggle('ready',cur===-1);
   const ob=$('#ov-badge'); if(ob){const b=chapter===7?['free','Free play']:cur===-1?['ok','Complete']:['prog','In progress']; ob.className='ov-badge '+b[0]; ob.textContent=b[1];}
@@ -2070,7 +2221,7 @@ function animateMove(from,to,pkt,token){
   });
 }
 function gate(){
-  if(ui.mode==='step') return new Promise(res=>{ ui.resume=res; capActions([{label:'Next hop',act:'next-hop',primary:true}]); const b=$('#cap-actions button'); if(b&&b.focus) b.focus({preventScroll:true}); });
+  if(ui.mode==='step') return new Promise(res=>{ ui.resume=res; capActions([{label:'Next hop →',act:'next-hop',primary:true}]); const b=$('#cap-actions button'); if(b&&b.focus) b.focus({preventScroll:true}); });
   return sleep(ui.mode==='fast'?650:1700);
 }
 async function play(st,token){
@@ -3249,6 +3400,7 @@ function lessonSync(){
   if(window.FTP&&window.FTP.renderSteps)window.FTP.renderSteps();
 }
 function startLesson(k){
+  setTimeout(()=>coach('lesson'),500);
   const meta=SVCL().find(x=>x[0]===k);if(!meta||!LES[k])return;
   if(!svcMode){
     stash=JSON.stringify(D);svcMode=true;document.body.classList.add('svc-mode');
@@ -3999,7 +4151,7 @@ function pTest(){
     F('Protocol',sl('t',T.proto,[['tcp','TCP'],['udp','UDP'],['icmp','ICMP (ping)']],{f:'proto'}))+
     (needsCreds(T)?ck('t',!!T.signed,'The caller signs the request with valid AWS credentials',{f:'signed'}):'')+
     (T.proto==='icmp'?'':F('Port',inp('t',T.port,{f:'port'},'class="mono" inputmode="numeric" list="b-ports"')+'<datalist id="b-ports"><option value="443">HTTPS</option><option value="80">HTTP</option><option value="22">SSH</option><option value="8080">App</option><option value="3306">MySQL</option><option value="5432">PostgreSQL</option></datalist>'))+
-    `<div class="row"><button class="btn primary" data-b="run">Send the packet</button><button class="btn" data-b="save-check">Save as a check</button></div><p class="mut sm">Each hop is listed in Packet flow below the canvas.</p>`;
+    `<div class="row"><button class="btn primary${last?'':' cta'}" data-b="run">▶ Send the packet</button><button class="btn" data-b="save-check">Save as a check</button></div><p class="mut sm">Each hop is listed in Packet flow below the canvas.</p>`;
   if(last){
     const r=last.res;
     if(play.running)h+=`<div class="b-res run"><b>${esc(tLabel(last.test))}</b>Follow the packet on the canvas.${play.mode==='step'?' <div class="row" style="margin-bottom:0"><button class="btn primary" data-b="next-hop">Next hop</button></div>':''}</div>`;
@@ -4228,6 +4380,12 @@ function onClick(e){
   if(a==='theme'){setTheme(d.v);return;}
   if(a==='dim'){setDim(d.v);return;}
   if(a==='follow'){setFollow(!followOn());return;}
+  if(a==='home'){setMode('home');return;}
+  if(a==='go-learn'){learnHash='overview';setMode('learn');return;}
+  if(a==='go-design'){setMode('design');return;}
+  if(a==='help'){coach(svcMode?'lesson':document.body.dataset.view==='design'?'design':'learn',true);return;}
+  if(a==='co-next'){coachStep(1);return;}
+  if(a==='co-skip'){coachEnd();return;}
   if(a==='menu'){const o=document.body.classList.toggle('menu-open');b.setAttribute('aria-expanded',String(o));return;}
   if(a==='pal-toggle'){const o=$('#b-pal').classList.toggle('open');b.textContent=o?'Hide':'Show';b.setAttribute('aria-expanded',String(o));return;}
   if(a==='lall'){$('#steps').classList.toggle('open');if(window.FTP&&window.FTP.renderSteps)window.FTP.renderSteps();return;}
@@ -4285,6 +4443,7 @@ function onClick(e){
   else if(a==='dlg-x')dlgClose();
 }
 document.addEventListener('click',onClick);
+document.addEventListener('click',e=>{if(document.body.classList.contains('menu-open')&&!e.target.closest('.setw')){document.body.classList.remove('menu-open');const m=$('.menu-btn');if(m)m.setAttribute('aria-expanded','false');}});
 document.addEventListener('click',e=>{$$('details.menu[open]').forEach(m=>{if(!m.contains(e.target)||e.target.closest('.menu-p button'))m.open=false;});});
 $('#builder').addEventListener('change',onChange);
 document.addEventListener('keydown',e=>{
@@ -4348,7 +4507,7 @@ function pTut(){
     <h3>What it is</h3><p>${esc(s.what)}</p><h3>Why it’s here</h3><p>${esc(s.why)}</p>`;
   if(names.length&&!lastStep)h+=`<p class="sm"><span class="mut">Added or changed in this step, outlined on the canvas:</span> ${tut.hl.filter((el,j,a)=>a.findIndex(x=>elName(x)===elName(el))===j&&elName(el)).slice(0,10).map(el=>go(el,elName(el))).join(', ')}</p>`;
   if(s.tries.length){
-    h+='<h3>Try it</h3><div class="tut-tries">'+s.tries.map((x,j)=>`<button class="btn" data-b="tut-try" data-i="${j}">${esc(x.label)}</button>`).join('')+'</div>';
+    h+='<h3>Try it</h3><p class="mut sm" style="margin:0 0 8px">Press ▶ to send a packet and watch it on the map.</p><div class="tut-tries">'+s.tries.map((x,j)=>`<button class="btn${!(last&&last.tutStep===tut.i)&&j===0?' primary cta':''}" data-b="tut-try" data-i="${j}"><span class="pl">▶</span> ${esc(x.label)}</button>`).join('')+'</div>';
     if(last&&last.tutStep===tut.i){
       const r=last.res;
       if(play.running)h+=`<div class="b-res"><b>${esc(tLabel(last.test))}</b>Follow the packet on the canvas.${play.mode==='step'?'<div class="row" style="margin-bottom:0"><button class="btn primary" data-b="next-hop">Next hop</button></div>':''}</div>`;
@@ -4356,7 +4515,7 @@ function pTut(){
     }
   }
   if(lastStep&&D.tests.length)h+=`<div class="row"><button class="btn" data-b="tab" data-v="test">See the saved checks</button></div>`;
-  h+=`<div class="tut-nav">${tut.i?'<button class="btn" data-b="tut-back">Back</button>':'<span></span>'}${lastStep?'<button class="btn primary" data-b="tut-finish">'+(tut.lesson?(nextLesson()?'Next lesson: '+esc(nextLesson()[1]):'Finish'):'Finish')+'</button>':'<button class="btn primary" data-b="tut-next">Next step</button>'}</div>`;
+  h+=`<div class="tut-nav">${tut.i?'<button class="btn" data-b="tut-back">Back</button>':'<span></span>'}${lastStep?'<button class="btn primary" data-b="tut-finish">'+(tut.lesson?(nextLesson()?'Next lesson: '+esc(nextLesson()[1]):'Finish'):'Finish')+'</button>':'<button class="btn primary'+(!s.tries.length||(last&&last.tutStep===tut.i)?' cta':'')+'" data-b="tut-next">Next step →</button>'}</div>`;
   h+='<h3>All steps</h3><ol class="tut-steps">'+tut.steps.map((x,j)=>`<li class="${j<tut.i?'done':j===tut.i?'cur':''}"><button data-b="tut-go" data-i="${j}">${esc(x.title)}</button></li>`).join('')+'</ol>';
   h+=tut.lesson?`<p class="mut sm" style="margin-top:12px">Each step rebuilds the network up to that point, so changes you make on the canvas are replaced when you move to another step.</p>`:`<p class="mut sm" style="margin-top:12px">Each step rebuilds the design up to that point, so changes you make on the canvas are replaced when you move to another step. To keep them, leave the tutorial.</p><button class="lk sm" data-b="tut-exit">Leave the tutorial and keep this design</button>`;
   return h;
@@ -4399,20 +4558,82 @@ renderEmpty();
 {let fv='on';try{fv=localStorage.getItem('ftp-follow')||'on';}catch(e){}setFollow(fv!=='off');}
 $$('#dimsw button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===(isIso()?'3d':'2d'))));
 
+/* ---------- first-visit guided tour ---------- */
+const COACH={
+  learn:[
+    {sel:'#steps .lrow.cur',t:'Lessons',x:'Work through the lessons in order. The outlined one is the lesson you are on, with its steps underneath.'},
+    {sel:'#tasks li.cur .btn|#steps .lrow.cur',t:'Do the step',x:'Press the blue button. It changes the network or sends a packet. When a step is done, the next button appears.'},
+    {sel:'#stage',t:'Watch the packet',x:'The packet travels across this map: amber on the way there, violet on the way back. The view zooms in on each hop.'},
+    {sel:'#flow',t:'See why',x:'Every hop is listed here, with the reason it was allowed or dropped. Choose Step to go one hop at a time.'},
+    {sel:'#panel',t:'Read the explanation',x:'What the part is, and why it matters. Press Next at the bottom when the lesson is complete.'}],
+  design:[
+    {sel:'#hdesign',t:'Start here',x:'Open a template to explore a ready-made network, or press New for an empty canvas.'},
+    {sel:'#b-pal',t:'Add components',x:'Drag a component onto the canvas, or click it and then click where it should go.'},
+    {sel:'#b-canvas',t:'Edit anything',x:'Click any part of the network to change it in the panel on the right.'},
+    {sel:'.b-tabs [data-v="test"]',t:'Test a connection',x:'Pick where a packet starts and ends, then press ▶ Send the packet.'},
+    {sel:'#b-flow',t:'Follow every check',x:'Each hop appears here, with the route tables, network ACLs and security groups that let it through or stopped it.'}],
+  lesson:[
+    {sel:'#b-panel',t:'Read the step',x:'Each step adds one part of the network and explains what it is and why it is here.'},
+    {sel:'[data-b="tut-try"]|#b-panel',t:'Send a packet',x:'Press ▶ to send a packet and watch it cross the map. Its checks appear in Packet flow below.'},
+    {sel:'[data-b="tut-next"]|[data-b="tut-finish"]',t:'Move on',x:'Press Next step when you are ready. The left list shows where you are in the lesson.'}]
+};
+let coachS=null;
+function coach(kind,force){
+  if(!COACH[kind])return;
+  if(!force){try{if(localStorage.getItem('ftp-coach-'+kind))return;}catch(e){}}
+  coachS={kind,i:0};coachShow();
+}
+function coachTarget(st){for(const s of st.sel.split('|')){const el=$(s);if(el&&el.offsetParent&&el.getBoundingClientRect().width)return el;}return null;}
+function coachShow(){
+  if(!coachS)return;
+  const list=COACH[coachS.kind],st=list[coachS.i];
+  const el=coachTarget(st);
+  if(!el){if(coachS.i<list.length-1){coachS.i++;return coachShow();}return coachEnd();}
+  let box=$('#coach');
+  if(!box){box=document.createElement('div');box.id='coach';box.innerHTML='<div class="co-ring"></div><div class="co-pop" role="dialog" aria-live="polite"></div>';document.body.appendChild(box);}
+  const r0=el.getBoundingClientRect();
+  if(r0.top<60||r0.bottom>window.innerHeight-40)el.scrollIntoView({block:r0.height>window.innerHeight*.6?'start':'center'});
+  box.querySelector('.co-pop').innerHTML=`<span class="co-n">${coachS.i+1} of ${list.length}</span><b>${esc(st.t)}</b><p>${esc(st.x)}</p><div class="co-a"><button class="lk" data-b="co-skip">Skip tour</button><button class="btn primary" data-b="co-next">${coachS.i<list.length-1?'Next':'Got it'}</button></div>`;
+  coachPlace();
+}
+function coachPlace(){
+  if(!coachS)return;const box=$('#coach');if(!box)return;
+  const el=coachTarget(COACH[coachS.kind][coachS.i]);if(!el)return;
+  const r=el.getBoundingClientRect(),ring=box.querySelector('.co-ring'),pop=box.querySelector('.co-pop'),pad=6;
+  const top=Math.max(4,r.top-pad),bot=Math.min(window.innerHeight-4,r.bottom+pad);
+  Object.assign(ring.style,{left:Math.max(4,r.left-pad)+'px',top:top+'px',width:Math.min(window.innerWidth-8,r.width+pad*2)+'px',height:Math.max(20,bot-top)+'px'});
+  const pw=Math.min(340,window.innerWidth-24),ph=pop.offsetHeight||170;
+  let x=Math.min(Math.max(12,r.left+r.width/2-pw/2),window.innerWidth-pw-12),y;
+  if(window.innerHeight-bot>ph+16)y=bot+10;
+  else if(top>ph+16)y=top-ph-10;
+  else{y=Math.max(12,window.innerHeight-ph-12);if(r.width<window.innerWidth-pw-40)x=r.right+pw+24<window.innerWidth?r.right+14:Math.max(12,r.left-pw-14);}
+  Object.assign(pop.style,{left:x+'px',top:y+'px',width:pw+'px'});
+}
+function coachStep(d){if(!coachS)return;coachS.i+=d;if(coachS.i>=COACH[coachS.kind].length)return coachEnd();coachShow();}
+function coachEnd(){if(coachS){try{localStorage.setItem('ftp-coach-'+coachS.kind,'1');}catch(e){}}coachS=null;const b=$('#coach');if(b)b.remove();}
+window.addEventListener('resize',()=>coachPlace());
+window.addEventListener('scroll',()=>coachPlace(),true);
+document.addEventListener('keydown',e=>{if(coachS&&e.key==='Escape')coachEnd();});
+
 /* ---------- switching between the tour and the designer ---------- */
 function setMode(m,fromHash){
-  if(m==='design'&&svcMode)exitLesson();
-  document.body.dataset.view=m;
+  if((m==='design'||m==='home')&&svcMode)exitLesson();
+  const was=document.body.dataset.view;
+  document.body.dataset.view=m;document.body.classList.remove('menu-open');
+  if(m==='home'){$$('#viewsw button').forEach(b=>b.setAttribute('aria-pressed','false'));if(was==='learn'||was==='design')learnHash=was==='learn'?(location.hash.slice(1)||learnHash):learnHash;if(!fromHash){try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}const h=$('#home');if(h)h.scrollTop=0;window.scrollTo(0,0);return;}
+  setTimeout(()=>coach(svcMode?'lesson':m),450);
   $$('#viewsw button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===m)));
   if(m==='design'){
     if(!fromHash){learnHash=location.hash.slice(1)||'overview';try{location.hash='designer';}catch(e){}}
     requestAnimationFrame(()=>{if(!fitted){fit();fitted=true;}else setView();draw();renderPanel();});
   }else if(!fromHash){try{location.hash=learnHash||'overview';}catch(e){}}
 }
-window.addEventListener('hashchange',()=>{const d=location.hash==='#designer';if(d!==(document.body.dataset.view==='design'))setMode(d?'design':'learn',true);});
+window.addEventListener('hashchange',()=>{const d=location.hash==='#designer';if(!location.hash){if(document.body.dataset.view!=='home')setMode('home',true);return;}if(d!==(document.body.dataset.view==='design'))setMode(d?'design':'learn',true);});
 D=load()||blankD();
 draw();renderPanel();
 if(location.hash==='#designer')setMode('design',true);
+else if(!location.hash||location.hash==='#home')setMode('home',true);
+else setMode('learn',true);
 window.FTPD={get D(){return D;},simulate:t=>E.simulate(D,t)};
 })();
 </script>
